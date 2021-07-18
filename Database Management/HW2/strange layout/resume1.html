@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>Resume</title>
+	</head>
+	<style>
+		img 
+		{
+				border-radius: 90%;
+		}
+		p.skill 
+		{
+				padding-left: 20px;
+		}
+		span.skill 
+		{
+				padding-left: 20px;
+		}
+		progress.skill 
+		{
+				padding-left: 20px;
+		}
+		hr 
+		{ 
+		  	display: block;
+		  	margin-top: 0.5em;
+		  	margin-bottom: 0.5em;
+		  	margin-left: auto;
+		  	margin-right: auto;
+		  	border-style: inset;
+		  	border-width: 1px;
+		} 
+	</style>
+	
+	<frameset rows="90%,*" frameborder=0>    <!--把頁面分成上下兩部分，上部分佔15%，下部分*表示佔據其餘部分-->
+		<frame src="./top.html" name="top" scrolling="yes"></frame><!--上半部分要顯示的頁面-->
+		<h2>EDUCATION</h2>
+		<frameset cols="40%,*" frameborder=0><!--把頁面分成左右兩部分，左部分佔15%，右部分*表示佔據其餘部分-->
+			<frame src="./left.html" name="left" scrolling="yes"></frame><!--做半部分要顯示的頁面-->
+			<frame src="./right.html" name="right" scrolling="yes"></frame><!--右半部分要顯示的頁面-->
+		</frameset>
+	</frameset>
+</html>

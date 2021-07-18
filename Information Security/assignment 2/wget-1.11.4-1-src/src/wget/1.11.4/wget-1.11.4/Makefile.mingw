@@ -1,0 +1,39 @@
+export DEFSPLUS= 
+export INCLUDESPLUS= 
+export CFLAGSPLUS= 
+export LDFLAGSPLUS= 
+export LIBSPLUS= -lwsock32 -lws2_32 -LD:/Progra~1/GnuWin32/lib -lssl32 -leay32
+export DLLFLAG=  
+sedfiles=Makefile libtool config.h
+BUILDDIR=$(shell cygpath -m `pwd`)
+BUILD0DIR=$(shell basename $(BUILDDIR))
+SRCDIR=../$(BUILD0DIR)-src
+INSTALLDIR=$(BUILD0DIR)
+INSTALLDIR=$(shell echo $(BUILD0DIR) | sed -e "s/-[^-]*$$//")
+PREFIX=c:/progra~1/$(INSTALLDIR)
+
+export acl_cv_shlibext=dll.a
+export ac_cv_func_getaddrinfo=yes
+export wget_cv_proto_inet6=yes
+export ac_cv_type_struct_sockaddr_in6=yes
+export ac_cv_type_struct_sockaddr_storage=yes
+export ac_cv_func_usleep=no
+#export ac_cv_libssl=
+
+.PHONY: all 
+all: CONF MFSED
+CONF:
+#	if [ ! -e Makefile.in.sed ]; then \
+#		cp -fp k:/Makefile.in.sed .; \
+#	fi
+#	find.exe $(SRCDIR) -iname Makefile.in -exec sed -i -f Makefile.in.sed '{}' ';'
+	$(SRCDIR)/configure --prefix="$(PREFIX)" --srcdir="$(SRCDIR)" \
+		--docdir="$(PREFIX)/doc" --infodir="$(PREFIX)/info" --mandir="$(PREFIX)/man" \
+		--with-libssl-prefix=D:/Progra~1/GnuWin32
+#		--without-libssl-prefix --without-libssl \
+	
+-include $(DVLDIR)/makefile.chg
+
+#	make all
+#	make check
+#	make install prefix=c:/temp/$(INSTALLDIR)                                 

@@ -1,0 +1,201 @@
+diff -ipuwr --binary --strip-trailing-cr -x '*.bak' -x '*.orig' -x '*.rej' -x '*.new' -x '*~' -x debian -x '*.po' -x '*.pot' wget-1.11.4-orig/src/Makefile.in wget-1.11.4-src/src/Makefile.in
+--- wget-1.11.4-orig/src/Makefile.in	2008-04-27 06:48:21.000000000 +0200
++++ wget-1.11.4-src/src/Makefile.in	2008-08-29 09:19:34.344226600 +0200
+@@ -36,7 +36,8 @@ top_builddir = ..
+ 
+ top_srcdir = @top_srcdir@
+ srcdir     = @srcdir@
+-VPATH      = @srcdir@
++resdir     = @top_builddir@/resource
++VPATH      = @srcdir@ $(resdir)
+ 
+ prefix       = @prefix@
+ exec_prefix  = @exec_prefix@
+@@ -52,11 +53,14 @@ CPPFLAGS = @CPPFLAGS@
+ # The following line is losing on some versions of make!
+ DEFS     = @DEFS@ -DSYSTEM_WGETRC=\"$(sysconfdir)/wgetrc\" -DLOCALEDIR=\"$(localedir)\"
+ CFLAGS   = @CFLAGS@
++MAJOR    = $(shell echo $(VERSION) | sed -e "s/\..*$$//")
++MINOR    = $(shell echo $(VERSION) | sed -e "s/^[^\.]*\.0*\([0-9]\+\).*$$/\1/")
+ LDFLAGS  = @LDFLAGS@ 
++LDFLAGS  += -Wl,--major-image-version=$(MAJOR) -Wl,--minor-image-version=$(MINOR)
+ LIBS     = @LIBS@ @LIBSSL@ @LIBGNUTLS@
+ exeext   = @EXEEXT@
+ 
+-INCLUDES = -I. -I$(srcdir)
++INCLUDES = -I. -I$(srcdir) -I$(top_srcdir)
+ 
+ COMPILE = $(CC) $(INCLUDES) $(CPPFLAGS)  $(DEFS) $(CFLAGS)
+ LINK    = $(CC) $(CFLAGS) $(LDFLAGS) -o $@
+@@ -78,10 +82,15 @@ OBJ = $(ALLOCA) cmpt.o connect.o convert
+       host.o html-parse.o html-url.o http.o $(NTLM_OBJ) init.o    \
+       log.o main.o $(MD5_OBJ) netrc.o progress.o ptimer.o recur.o \
+       res.o retr.o safe-ctype.o snprintf.o spider.o $(SSL_OBJ)    \
+-      url.o utils.o version.o xmalloc.o
++      url.o utils.o version.o xmalloc.o mswindows.o wget-res.o    \
++	 progname.o progreloc.o relocatable.o
+ 
+ .SUFFIXES:
+-.SUFFIXES: .c .o
++.SUFFIXES: .c .o .rc .exe
++
++# Rule to make compiled resource (Windows)
++.rc.o:
++	windres --include-dir $(resdir) -i $< -o $@
+ 
+ .c.o:
+ 	$(COMPILE) -c $<
+diff -ipuwr --binary --strip-trailing-cr -x '*.bak' -x '*.orig' -x '*.rej' -x '*.new' -x '*~' -x debian -x '*.po' -x '*.pot' wget-1.11.4-orig/src/config-post.h wget-1.11.4-src/src/config-post.h
+--- wget-1.11.4-orig/src/config-post.h	2008-04-27 06:48:21.000000000 +0200
++++ wget-1.11.4-src/src/config-post.h	2008-08-18 23:15:41.078125000 +0200
+@@ -77,3 +77,14 @@ extern "C"
+ # endif
+ void *alloca (size_t);
+ #endif
++
++#if defined _WIN32 || defined __WIN32__
++# define WINDOWS 1
++# ifdef HAVE_SYMLINK
++#  undef HAVE_SYMLINK
++# endif
++#endif
++
++#ifdef WINDOWS
++# include "windows/config-compiler.h"
++#endif
+diff -ipuwr --binary --strip-trailing-cr -x '*.bak' -x '*.orig' -x '*.rej' -x '*.new' -x '*~' -x debian -x '*.po' -x '*.pot' wget-1.11.4-orig/src/host.c wget-1.11.4-src/src/host.c
+--- wget-1.11.4-orig/src/host.c	2008-04-27 06:48:21.000000000 +0200
++++ wget-1.11.4-src/src/host.c	2008-12-31 12:36:07.140625000 +0100
+@@ -45,6 +45,13 @@ as that of the covered work.  */
+ # define SET_H_ERRNO(err) ((void)(h_errno = (err)))
+ #else  /* WINDOWS */
+ # define SET_H_ERRNO(err) WSASetLastError (err)
++# ifndef IN6_ARE_ADDR_EQUAL
++#  define IN6_ARE_ADDR_EQUAL(a,b) \
++     ((((__const uint32_t *) (a))[0] == ((__const uint32_t *) (b))[0])     \
++      && (((__const uint32_t *) (a))[1] == ((__const uint32_t *) (b))[1])  \
++      && (((__const uint32_t *) (a))[2] == ((__const uint32_t *) (b))[2])  \
++      && (((__const uint32_t *) (a))[3] == ((__const uint32_t *) (b))[3]))
++# endif /* IN6_ARE_ADDR_EQUAL */
+ #endif /* WINDOWS */
+ 
+ #include <errno.h>
+diff -ipuwr --binary --strip-trailing-cr -x '*.bak' -x '*.orig' -x '*.rej' -x '*.new' -x '*~' -x debian -x '*.po' -x '*.pot' wget-1.11.4-orig/src/init.c wget-1.11.4-src/src/init.c
+--- wget-1.11.4-orig/src/init.c	2008-04-27 06:48:23.000000000 +0200
++++ wget-1.11.4-src/src/init.c	2008-08-29 09:45:07.187976600 +0200
+@@ -55,6 +55,12 @@ as that of the covered work.  */
+ #include "http.h"               /* for http_cleanup */
+ #include "retr.h"               /* for output_stream */
+ 
++#ifdef ENABLE_RELOCATABLE
++# include <relocatable.h>
++#else /* ENABLE_RELOCATABLE */
++ define relocate(path) (path)
++#endif /* ENABLE_RELOCATABLE */
++
+ #ifdef TESTING
+ #include "test.h"
+ #endif
+@@ -512,17 +518,27 @@ initialize (void)
+ 
+   /* If SYSTEM_WGETRC is defined, use it.  */
+ #ifdef SYSTEM_WGETRC
+-  if (file_exists_p (SYSTEM_WGETRC))
+-    ok &= run_wgetrc (SYSTEM_WGETRC);
++  if (opt.verbose)
++    fprintf (stderr, "SYSTEM_WGETRC = %s\n", SYSTEM_WGETRC);
++  char *syswgetrc = relocate (SYSTEM_WGETRC);
++  if (opt.verbose)
++    fprintf (stderr, "syswgetrc = %s\n", syswgetrc);
++  if (file_exists_p (syswgetrc))
++    ok &= run_wgetrc (syswgetrc);
+ #endif
+   /* Override it with your own, if one exists.  */
+   file = wgetrc_file_name ();
+-  if (!file)
++  if (!file) {
++    if (syswgetrc)
++      free (syswgetrc);
+     return;
++  }
++  if (opt.verbose)
++    fprintf (stderr, "wgetrc_file_name = %s\n", file);
+   /* #### We should canonicalize `file' and SYSTEM_WGETRC with
+      something like realpath() before comparing them with `strcmp'  */
+ #ifdef SYSTEM_WGETRC
+-  if (!strcmp (file, SYSTEM_WGETRC))
++  if (!strcmp (file, syswgetrc))
+     {
+       fprintf (stderr, _("\
+ %s: Warning: Both system and user wgetrc point to `%s'.\n"),
+@@ -531,6 +547,10 @@ initialize (void)
+   else
+ #endif
+     ok &= run_wgetrc (file);
++#ifdef SYSTEM_WGETRC
++  if (syswgetrc)
++    free (syswgetrc);
++#endif
+ 
+   /* If there were errors processing either `.wgetrc', abort. */
+   if (!ok)
+diff -ipuwr --binary --strip-trailing-cr -x '*.bak' -x '*.orig' -x '*.rej' -x '*.new' -x '*~' -x debian -x '*.po' -x '*.pot' wget-1.11.4-orig/src/main.c wget-1.11.4-src/src/main.c
+--- wget-1.11.4-orig/src/main.c	2008-06-30 03:22:53.000000000 +0200
++++ wget-1.11.4-src/src/main.c	2008-08-29 09:32:51.828601600 +0200
+@@ -71,7 +71,6 @@ extern char *version_string;
+ static void redirect_output_signal (int);
+ #endif
+ 
+-const char *exec_name;
+ 
+ #ifndef TESTING
+ /* Initialize I18N/L10N.  That amounts to invoking setlocale, and
+@@ -705,11 +704,7 @@ main (int argc, char *const *argv)
+   i18n_initialize ();
+ 
+   /* Construct the name of the executable, without the directory part.  */
+-  exec_name = strrchr (argv[0], PATH_SEPARATOR);
+-  if (!exec_name)
+-    exec_name = argv[0];
+-  else
+-    ++exec_name;
++  set_program_name (argv[0]);
+ 
+ #ifdef WINDOWS
+   /* Drop extension (typically .EXE) from executable filename. */
+diff -ipuwr --binary --strip-trailing-cr -x '*.bak' -x '*.orig' -x '*.rej' -x '*.new' -x '*~' -x debian -x '*.po' -x '*.pot' wget-1.11.4-orig/src/mswindows.h wget-1.11.4-src/src/mswindows.h
+--- wget-1.11.4-orig/src/mswindows.h	2008-04-27 06:48:23.000000000 +0200
++++ wget-1.11.4-src/src/mswindows.h	2008-12-31 12:28:43.640625000 +0100
+@@ -41,13 +41,19 @@ as that of the covered work.  */
+ #endif
+ 
+ #include <windows.h>
++# ifdef C_ASSERT
++# undef C_ASSERT
++# define C_ASSERT(e) extern char __C_ASSERT__[(e)?1:-1]
++#endif
+ 
+ /* We need winsock2.h for IPv6 and ws2tcpip.h for getaddrinfo, so
+   include both in ENABLE_IPV6 case.  (ws2tcpip.h includes winsock2.h
+   only on MinGW.) */
+ #ifdef ENABLE_IPV6
++#  define _inline __inline__
+ # include <winsock2.h>
+ # include <ws2tcpip.h>
++# include <WSPiApi.h>
+ #else
+ # include <winsock.h>
+ #endif
+diff -ipuwr --binary --strip-trailing-cr -x '*.bak' -x '*.orig' -x '*.rej' -x '*.new' -x '*~' -x debian -x '*.po' -x '*.pot' wget-1.11.4-orig/src/wget.h wget-1.11.4-src/src/wget.h
+--- wget-1.11.4-orig/src/wget.h	2008-04-27 06:48:24.000000000 +0200
++++ wget-1.11.4-src/src/wget.h	2008-08-29 09:32:56.609851600 +0200
+@@ -305,7 +305,8 @@ typedef double SUM_SIZE_INT;
+    0-pad the address.)  */
+ #define PTR_FORMAT(p) (int) (2 * sizeof (void *)), (unsigned long) (p)
+ 
+-extern const char *exec_name;
++#include "progname.h"
++#define exec_name program_name
+ 
+ /* Document type ("dt") flags */
+ enum

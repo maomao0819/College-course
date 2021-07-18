@@ -1,0 +1,89 @@
+html 
+{
+    font-family: "Lucida Sans", sans-serif;
+    /* remove right part space */
+    width:100%;
+    overflow-x:hidden;
+}
+
+/* parallax-background */
+.parallax 
+{
+    /* background image / align center / no repeat */
+    background: url("../image/gameplay.jpg")center center no-repeat;
+
+    /* block height */
+    min-height: 600px; 
+
+    /* 背景自動縮放/固定 */
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+/* Navigation Bar */
+ul.nevigate {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+li.nevigate {
+  float: left;
+  border-right:2px solid #aaa;
+}
+li.nevigate:last-child {
+  border-right: none;
+  float: right;
+}
+li.nevigate a.nevigate {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 72px;
+  text-decoration: none;
+}
+li.nevigate a.nevigate:hover:not(.active) {
+  background-color: #111;
+}
+li a.active {
+  background-color: green;
+}
+
+/* SCROLL TOP BOTTON */
+#TopBotton {
+  display: none;
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+  font-size: 18px;
+  border: none;
+  background-color: #555;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 7px;
+}
+#TopBotton:hover 
+{
+  background-color: green;
+}
+
+/*horizontal line */
+hr 
+{ 
+  	display: block;
+  	margin-top: 0.5em;
+  	margin-bottom: 0.5em;
+  	margin-left: auto;
+  	margin-right: auto;
+  	border-style: inset;
+  	border-width: 1px;
+  	border: 3px solid orange;
+} 
+
+/* backgroung color */
+
+div.bg_pink
+{
+  background-color: pink;
+}

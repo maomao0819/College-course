@@ -1,0 +1,14 @@
+*.pyc
+__pycache__
+.pytest_cache
+.coverage
+
+# virtualenv
+env/
+virtualenv/
+venv/
+
+# pyinstaller
+build
+dist
+*.spec

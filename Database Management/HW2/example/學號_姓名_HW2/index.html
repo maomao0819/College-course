@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>第一次作業範例</title>
+    <meta charset="utf-8">
+    <link 
+      rel="stylesheet" 
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    >
+    <link 
+      rel="stylesheet" 
+      href="./assets/style.css"
+    >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="./assets/demo.js"></script>
+  </head>
+
+  <body>
+    <div class="container"> 
+      <button 
+        type="button" 
+        class="btn btn-secondary"
+        style="width: 100%;"
+      >
+        看更多
+      </button>
+      <div 
+        id="details" 
+        class="card-body"
+        style="display: none; text-align: center;"
+      >
+        <div class="card-body bg-light">
+          <h4 
+            class="card-title bg-dark text-white"
+            style="width: 100%; height: 50px;"  
+          >
+            <b>有互動性才需標註</b>
+          </h4>
+          <div style="text-align: left;">
+            <h5>以此範例為例:</h5><br>
+            <p>
+              互動功能1: 按鈕點擊觸發<b>顯示</b>與<b>隱藏</b>內容
+            </p>
+            <p>
+              互動功能2: Bootstrap內建的Carousel輪播圖片功能
+            </p>
+            <font color="red">寫得越詳細越方便評分</font>
+          </div>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center">
+        <div >
+          <div 
+            id="demo" 
+            class="carousel slide square-content" 
+            data-ride="carousel" 
+          >
+            <ul class="carousel-indicators">
+              <li 
+                data-target="#demo" 
+                data-slide-to="0" 
+                class="active"
+              ></li>
+              <li 
+                data-target="#demo" 
+                data-slide-to="1"></li>
+              <li 
+                data-target="#demo" 
+                data-slide-to="2"></li>
+            </ul>
+          
+            <div 
+              class="carousel-inner"
+              style="height: 500px; width:500px"
+            >
+              <div class="carousel-item active">
+                <img src="./assets/img/beach.jpg" alt="beach">
+              </div>
+              <div class="carousel-item">
+                <img src="./assets/img/jet.jpg" alt="jet">
+              </div>
+              <div class="carousel-item">
+                <img src="./assets/img/mountain.jpg" alt="mountain">
+              </div>
+            </div>
+          
+            <a 
+              class="carousel-control-prev" 
+              href="#demo" 
+              data-slide="prev"
+            >
+              <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a 
+              class="carousel-control-next" 
+              href="#demo" 
+              data-slide="next"
+            >
+              <span class="carousel-control-next-icon"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
