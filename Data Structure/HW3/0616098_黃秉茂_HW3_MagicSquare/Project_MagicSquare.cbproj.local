@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020/10/20 15:03:51.000.151,=D:\programming\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2020/10/20 15:03:52.000.078,=D:\programming\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2020/10/20 15:37:57.000.406,D:\programming\Embarcadero\Studio\Projects\HW3\0616098_黃秉茂_HW3_MagicSquare\HW3_MagicSquare.cpp=D:\programming\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2020/10/20 15:37:57.000.406,D:\programming\Embarcadero\Studio\Projects\HW3\0616098_黃秉茂_HW3_MagicSquare\HW3_MagicSquare.dfm=D:\programming\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2020/10/20 15:37:57.000.406,D:\programming\Embarcadero\Studio\Projects\HW3\0616098_黃秉茂_HW3_MagicSquare\HW3_MagicSquare.h=D:\programming\Embarcadero\Studio\Projects\Unit1.h</Transaction>
+    <Transaction>2020/10/20 15:38:17.000.752,D:\programming\Embarcadero\Studio\Projects\HW3\0616098_黃秉茂_HW3_MagicSquare\Project_HW3_MagicSquare.h=D:\programming\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2020/10/20 15:38:39.000.499,D:\programming\Embarcadero\Studio\Projects\HW3\0616098_黃秉茂_HW3_MagicSquare\Project_MagicSquare.cbproj=D:\programming\Embarcadero\Studio\Projects\Project1.cbproj</Transaction>
+  </Transactions>
+</BorlandProject>

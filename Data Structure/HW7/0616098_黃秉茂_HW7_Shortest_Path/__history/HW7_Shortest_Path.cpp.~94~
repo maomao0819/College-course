@@ -1,0 +1,507 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "HW7_Shortest_Path.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm1 *Form1;
+
+// DEFINE MACRO
+#define max_matrix_length 100
+
+// using global variable to pass value easily
+// 2d-array to record the maze
+int Weight[max_matrix_length][max_matrix_length];
+int n = 0;
+int disconnected_weight = 99999;
+bool is_graph_created = false;
+bool is_print_detail = false;
+
+void CreateGraph(int n, int range_weight, int threshold_weight, int disconnected_weight, int min_n_weights, bool directed);
+void LoadGraph();
+void CheckGraph();
+void PrintAdjacentGraph(int n);
+void CreateSSADTable(int n);
+void CreateAllPairsTable(int n);
+void CreateTransitiveClosureTable(int n, int disconnected_weight);
+void InitializeTables(int n, int disconnected_weight);
+int min_index(int array [], int disconnected_weight);
+int fit_k(int n, int disconnected_weight, int Distance [], bool found []);
+void PrintSSADTableDistance(int n, int SSADTable_index, int min_index, int Distance []);
+void PrintSSADTableEdge(int n, int Edge []);
+void PrintSSADDistance(int source_number, int n, int Distance [], int Edge []);
+void Dijkstra(int n, int disconnected_weight, int source_number);
+void PrintAllPairsTableDistance(int n, int ** A);
+void PrintAllPairsTableEdge(int n, int ** Edge);
+void PrintAPSPDistance(int n, int ** A, int ** Edge);
+void APSP(int n, int disconnected_weight);
+void PrintTransitiveClosureTableDistance(int n, int ** TC);
+void TransitiveClosure(int n, int disconnected_weight);
+
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+	: TForm(Owner)
+{
+	n = 0;
+	disconnected_weight = 99999;
+	is_graph_created = false;
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+	LoadGraph();
+	InitializeTables(n, disconnected_weight);
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Button2Click(TObject *Sender)
+{
+	n = StrToInt(Edit1->Text);
+	int range_weight = StrToInt(Edit2->Text);
+	int threshold_weight = StrToInt(Edit3->Text);
+	disconnected_weight = StrToInt(Edit4->Text);
+	bool directed = Form1->CheckBox1->Checked ? false : true;
+	int min_n_weights = StrToInt(Edit5->Text);
+	CreateGraph(n, range_weight, threshold_weight, disconnected_weight, min_n_weights, directed);
+	InitializeTables(n, disconnected_weight);
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Button3Click(TObject *Sender)
+{
+    CheckGraph();
+	if (is_graph_created)
+	{
+		int source_number = StrToInt(Edit6->Text);
+		Dijkstra(n, disconnected_weight, source_number);
+	}
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Button4Click(TObject *Sender)
+{
+	CheckGraph();
+	if (is_graph_created)
+		APSP(n, disconnected_weight);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button5Click(TObject *Sender)
+{
+	CheckGraph();
+	if (is_graph_created)
+		TransitiveClosure(n, disconnected_weight);
+}
+//---------------------------------------------------------------------------
+
+// FUNCTION DEFINITION
+void CreateGraph(int n, int range_weight, int threshold_weight, int disconnected_weight, int min_n_weights, bool directed)
+{
+	is_graph_created = true;
+	srand(time(NULL));
+	int n_connected_weights = n * n;
+	for (int i = 0; i < n; i++)
+	{
+		if (directed)
+		{
+			for (int j = 0; j < n; j++)
+			{
+				if (i != j)
+				{
+                    Weight[i][j] = rand() % range_weight + 1;
+					if (Weight[i][j] > threshold_weight)
+					{
+						Weight[i][j] = disconnected_weight;
+						n_connected_weights--;
+					}
+				}
+			}
+			Weight[i][i] = 0;
+		}
+		else
+        {
+			for (int j = 0; j < i; j++)
+			{
+				Weight[i][j] = rand() % range_weight + 1;
+				if (Weight[i][j] > threshold_weight)
+				{
+					Weight[i][j] = disconnected_weight;
+                    n_connected_weights -= 2;
+				}
+				Weight[j][i] = Weight[i][j];
+			}
+			Weight[i][i] = 0;
+		}
+	}
+
+	if (n_connected_weights < min_n_weights)
+	{
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < n; j++)
+			{
+				if (Weight[i][j] == disconnected_weight)
+				{
+                    if (directed)
+					{
+						Weight[i][j] = rand() % threshold_weight + 1;
+						n_connected_weights++;
+					}
+					else
+					{
+						Weight[i][j] = rand() % threshold_weight + 1;
+						Weight[j][i] = Weight[i][j];
+						n_connected_weights += 2;
+					}
+				}
+				if (n_connected_weights >= min_n_weights)
+					break;
+			}
+            if (n_connected_weights >= min_n_weights)
+				break;
+		}
+	}
+}
+
+// load txt data to maze
+void LoadGraph()
+{
+	// Define fp as a pointer pointing to some file (with data type FILE) in hard desk
+	FILE *fp;
+	if (Form1->OpenDialog1->Execute())
+	{
+        // Use builder's string (AnsiString) to ease the conversion (into const char *)
+		AnsiString infile;
+		infile = Form1->OpenDialog1->FileName;
+		// The return value of function c_str is const char *, casting AnsiString to const char * for the use of fopen
+		fp = fopen(infile.c_str(), "r+");
+		// Read in an integer, n
+		fscanf(fp, "%d", &n);
+		fscanf(fp, "%d", &disconnected_weight);
+		Form1->Edit1->Text = n;
+		Form1->Edit4->Text = disconnected_weight;
+		// Read  into the Weight[][]
+		for (int i = 0; i < n; i++)
+			for (int j = 0; j < n; j++)
+				fscanf(fp, "%d", &Weight[i][j]);
+		fclose(fp);
+	}
+	is_graph_created = true;
+}
+
+void CheckGraph()
+{
+	if (!is_graph_created)
+		ShowMessage("The graph hasn't been created yet!");
+}
+
+void PrintAdjacentGraph(int n)
+{
+	Form1->StringGrid1->RowCount = n + 1;
+	Form1->StringGrid1->ColCount = n + 1;
+	for (int i = 0; i < n; i++)
+	{
+		Form1->StringGrid1->Cells[i + 1][0] = i;
+		Form1->StringGrid1->Cells[0][i + 1] = i;
+		for (int j = 0; j < n; j++)
+			Form1->StringGrid1->Cells[j + 1][i + 1] = Weight[i][j];
+	}
+	Form1->PageControl1->TabIndex = 1;
+}
+
+void CreateSSADTable(int n)
+{
+	Form1->StringGrid2->RowCount = n + 1;
+	Form1->StringGrid2->ColCount = n + 2;
+	for (int i = 0; i < n; i++)
+	{
+		Form1->StringGrid2->Cells[i + 1][0] = i;
+		Form1->StringGrid2->Cells[0][i + 1] = i;
+	}
+	Form1->StringGrid2->Cells[n + 1][0] = "Find";
+	Form1->PageControl1->TabIndex = 2;
+}
+
+void CreateAllPairsTable(int n, int disconnected_weight)
+{
+	Form1->StringGrid3->RowCount = n + 1;
+	Form1->StringGrid3->ColCount = n + 1;
+	for (int i = 0; i < n; i++)
+	{
+		Form1->StringGrid3->Cells[i + 1][0] = i;
+		Form1->StringGrid3->Cells[0][i + 1] = i;
+		for (int j = 0; j < n; j++)
+			Form1->StringGrid3->Cells[j + 1][i + 1] = Weight[i][j];
+	}
+	Form1->PageControl1->TabIndex = 3;
+
+	Form1->StringGrid4->RowCount = n + 1;
+	Form1->StringGrid4->ColCount = n + 1;
+	for (int i = 0; i < n; i++)
+	{
+		Form1->StringGrid4->Cells[i + 1][0] = i;
+		Form1->StringGrid4->Cells[0][i + 1] = i;
+        for (int j = 0; j < n; j++)
+		{
+			Form1->StringGrid4->Cells[j + 1][i + 1] = i;
+            if (Weight[i][j] == disconnected_weight)
+				Form1->StringGrid4->Cells[j + 1][i + 1] = -1;
+		}
+	}
+	Form1->PageControl1->TabIndex = 4;
+}
+
+void CreateTransitiveClosureTable(int n, int disconnected_weight)
+{
+	Form1->StringGrid5->RowCount = n + 1;
+	Form1->StringGrid5->ColCount = n + 1;
+	for (int i = 0; i < n; i++)
+	{
+		Form1->StringGrid5->Cells[i + 1][0] = i;
+		Form1->StringGrid5->Cells[0][i + 1] = i;
+		for (int j = 0; j < n; j++)
+			if (Weight[i][j] != disconnected_weight)
+				Form1->StringGrid5->Cells[j + 1][i + 1] = 1;
+			else
+				Form1->StringGrid5->Cells[j + 1][i + 1] = 0;
+	}
+	Form1->PageControl1->TabIndex = 5;
+}
+
+void InitializeTables(int n, int disconnected_weight)
+{
+    PrintAdjacentGraph(n);
+	CreateSSADTable(n);
+	CreateAllPairsTable(n, disconnected_weight);
+	CreateTransitiveClosureTable(n, disconnected_weight);
+    Form1->PageControl1->TabIndex = 1;
+}
+
+int min_index(int array [], int disconnected_weight)
+{
+	int min = disconnected_weight;
+	int min_id = -1;
+	for (int i = 0; i < n; i++)
+	{
+		if (array[i] < min)
+		{
+			min = array[i];
+			min_id = i;
+		}
+	}
+	return min_id;
+}
+
+int fit_k(int n, int disconnected_weight, int Distance [], bool found [])
+{
+	int dist[n];
+	for (int i = 0; i < n; i++)
+		dist[i] = found[i] ? disconnected_weight : Distance[i];
+	return min_index(dist, disconnected_weight);
+}
+
+void PrintSSADTableDistance(int n, int SSADTable_index, int min_index, int Distance [])
+{
+	for (int i = 0; i < n; i++)
+		Form1->StringGrid2->Cells[SSADTable_index + 1][i + 1] = Distance[i];
+	Form1->PageControl1->TabIndex = 2;
+}
+
+void PrintSSADTableEdge(int n, int Edge [])
+{
+	for (int i = 0; i < n; i++)
+		Form1->StringGrid2->Cells[n + 1][i + 1] = Edge[i];
+	Form1->PageControl1->TabIndex = 2;
+}
+
+void PrintSSADDistance(int source_number, int n, int Distance [], int Edge [])
+{
+	int u = source_number;
+	for (int v = 0; v < n; v++)
+	{
+		String output = "";
+		output = IntToStr(v);
+		int current;
+		int next;
+		for (next = v, current = Edge[next]; current != u; next = current, current = Edge[next])
+		{
+			if (current == -1)
+				break;
+			output = IntToStr(current) + " --[" + IntToStr(Weight[current][next])+ "]--> " + output;
+		}
+		if (current != -1)
+			Form1->Memo1->Lines->Add("The shortest distance from " + IntToStr(u) + " to " + IntToStr(v) + " is " + IntToStr(Distance[v]) + " with the path " + IntToStr(u) + " --[" + IntToStr(Weight[u][next]) + "]--> " + output + ".");
+		else
+			Form1->Memo1->Lines->Add(IntToStr(u) + " can't reach " + IntToStr(v) + " .");
+	}
+	Form1->Memo1->Lines->Add("");
+	Form1->PageControl1->TabIndex = 0;
+}
+
+void Dijkstra(int n, int disconnected_weight, int source_number)
+{
+	int u = source_number;
+	int Distance[n];
+	int Edge[n];
+	bool found[n];
+	is_print_detail = Form1->CheckBox2->Checked;
+	for (int v = 0; v < n; v++)
+	{
+		Distance[v] = Weight[u][v];
+		Edge[v] = Distance[v] == disconnected_weight ? -1 : u;
+		found[v] = false;
+	}
+	found[u] = true;
+	Distance[u] = 0;
+	int SSADTable_index = 0;
+	PrintSSADTableDistance(n, 0, -1, Distance);
+	if (is_print_detail)
+		Form1->Memo1->Lines->Add("SSAD");
+	for (SSADTable_index = 1; SSADTable_index < n; SSADTable_index++)
+	{
+		int k = fit_k(n, disconnected_weight, Distance, found);
+		if (k == -1)
+			break;
+		found[k] = true;
+		if (is_print_detail)
+			Form1->Memo1->Lines->Add("min = " + IntToStr(k));
+		for (int v = 0; v < n; v++)
+		{
+			if (found[v] == false && Distance[k] + Weight[k][v] < Distance[v])
+			{
+				Distance[v] = Distance[k] + Weight[k][v];
+				Edge[v] = k;
+			}
+		}
+		PrintSSADTableDistance(n, SSADTable_index, k, Distance);
+	}
+	if (is_print_detail)
+		PrintSSADDistance(source_number, n, Distance, Edge);
+	while (SSADTable_index < n)
+	{
+		PrintSSADTableDistance(n, SSADTable_index, -1, Distance);
+		SSADTable_index++;
+	}
+	PrintSSADTableEdge(n, Edge);
+}
+
+void PrintAllPairsTableDistance(int n, int ** A)
+{
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++)
+			Form1->StringGrid3->Cells[j + 1][i + 1] = A[i][j];
+	Form1->PageControl1->TabIndex = 3;
+}
+
+void PrintAllPairsTableEdge(int n, int ** Edge)
+{
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++)
+			Form1->StringGrid4->Cells[j + 1][i + 1] = Edge[i][j];
+	Form1->PageControl1->TabIndex = 4;
+}
+
+void PrintAPSPDistance(int n, int ** A, int ** Edge)
+{
+	Form1->Memo1->Lines->Add("APSP");
+	for (int u = 0; u < n; u++)
+	{
+		Form1->Memo1->Lines->Add("n =" + IntToStr(n));
+		for (int v = 0; v < n; v++)
+		{
+			String output = "";
+			output = IntToStr(v);
+			int current;
+			int next;
+			for (next = v, current = Edge[u][next]; current != u; next = current, current = Edge[u][next])
+			{
+				if (current == -1)
+					break;
+				output = IntToStr(current) + " --[" + IntToStr(Weight[current][next])+ "]--> " + output;
+			}
+			if (current != -1)
+				Form1->Memo1->Lines->Add("The shortest distance from " + IntToStr(u) + " to " + IntToStr(v) + " is " + IntToStr(A[u][v]) + " with the path " + IntToStr(u) + " --[" + IntToStr(Weight[u][next]) + "]--> " + output + ".");
+			else
+				Form1->Memo1->Lines->Add(IntToStr(u) + " can't reach " + IntToStr(v) + " .");
+		}
+	}
+	Form1->Memo1->Lines->Add("");
+	Form1->PageControl1->TabIndex = 0;
+}
+
+void APSP(int n, int disconnected_weight)
+{
+	int ** A;
+	A = new int *[n];
+	for (int i = 0; i < n; i++)
+		A[i] = new int[n];
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++)
+			A[i][j] = Weight[i][j];
+	int ** E;
+	E = new int *[n];
+	for (int i = 0; i < n; i++)
+		E[i] = new int[n];
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			E[i][j] = i;
+			if (Weight[i][j] == disconnected_weight)
+				E[i][j] = -1;
+		}
+	}
+	for (int k = 0; k < n; k++)
+	{
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < n; j++)
+			{
+				if (A[i][j] > (A[i][k] + A[k][j]))
+				{
+					A[i][j] = A[i][k] + A[k][j];
+					E[i][j] = k;
+				}
+			}
+		}
+	}
+	PrintAllPairsTableEdge(n, E);
+	PrintAllPairsTableDistance(n, A);
+	if (is_print_detail)
+        PrintAPSPDistance(n, A, E);
+	for(int i = 0; i < n; i++)
+		delete [] A[i];
+	delete [] A;
+}
+
+void PrintTransitiveClosureTableDistance(int n, int ** TC)
+{
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++)
+			Form1->StringGrid5->Cells[j + 1][i + 1] = TC[i][j];
+	Form1->PageControl1->TabIndex = 5;
+}
+
+void TransitiveClosure(int n, int disconnected_weight)
+{
+	int ** TC;
+	TC = new int *[n];
+	for(int i = 0; i < n; i++)
+		TC[i] = new int[n];
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++)
+			if (Weight[i][j] != disconnected_weight)
+				TC[i][j] = 1;
+			else
+                TC[i][j] = 0;
+	for (int k = 0; k < n; k++)
+		for (int i = 0; i < n; i++)
+			for (int j = 0; j < n; j++)
+				if (TC[i][k] + TC[k][j] > 1)
+					TC[i][j] = 1;
+
+	PrintTransitiveClosureTableDistance(n, TC);
+	for(int i = 0; i < n; i++)
+		delete [] TC[i];
+	delete [] TC;
+}

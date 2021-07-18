@@ -1,0 +1,64 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "HW1_sorting.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+
+int data [1000];
+int n;
+
+TForm1 *Form1;
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+
+void SelectionSort(int data[], int n)
+{
+	int i, j, min, temp;
+	for (i = 0; i < n; i++) 
+	{
+		min = i;
+		for (j = i + 1; j < n; j++) 
+		{
+			if (data[j] < data[min]) 
+				min = j;
+			temp = data[i];
+			data[i] = data[min];
+			data[min] = temp;
+		}	
+	}
+}
+
+void printData(int data[], int n)
+{
+	int i;
+	for (i = 0; i < n; i++) 
+		Form1->Memo2->Lines->Add("data[" + IntToStr(i) + "] = " + IntToStr(data[i]));		
+}
+
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+	n = StrToInt(Edit1->Text);
+	int range = StrToInt(Edit2->Text);
+	int i;
+	for (i = 0; i < n; i++) 
+	{
+		data[i] = rand() % range + 1;
+		Form1->Memo1->Lines->Add("data[" + IntToStr(i) + "] = " + IntToStr(data[i]));	
+	}
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Button2Click(TObject *Sender)
+{
+	SelectionSort(data, n);
+	Form1->Memo2->Lines->Add("n = " + IntToStr(n);
+	printData(data, n);
+}
+//---------------------------------------------------------------------------

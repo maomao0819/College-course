@@ -1,0 +1,217 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 590
+  ClientWidth = 870
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Splitter1: TSplitter
+    Left = 185
+    Top = 0
+    Height = 590
+    ExplicitLeft = 240
+    ExplicitTop = 296
+    ExplicitHeight = 100
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 185
+    Height = 590
+    Align = alLeft
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 24
+      Top = 303
+      Width = 105
+      Height = 13
+      Caption = 'the number of integer'
+    end
+    object Label2: TLabel
+      Left = 23
+      Top = 349
+      Width = 28
+      Height = 13
+      Caption = 'range'
+    end
+    object Label3: TLabel
+      Left = 24
+      Top = 16
+      Width = 90
+      Height = 13
+      Caption = 'recursive traversal'
+    end
+    object Label4: TLabel
+      Left = 24
+      Top = 81
+      Width = 112
+      Height = 13
+      Caption = 'non-recursive traversal'
+    end
+    object Edit1: TEdit
+      Left = 24
+      Top = 187
+      Width = 137
+      Height = 21
+      TabOrder = 0
+      Text = '100'
+    end
+    object Button2: TButton
+      Left = 24
+      Top = 214
+      Width = 137
+      Height = 25
+      Caption = 'Insert into BST'
+      TabOrder = 1
+      OnClick = Button2Click
+    end
+    object Edit2: TEdit
+      Left = 24
+      Top = 245
+      Width = 137
+      Height = 21
+      TabOrder = 2
+      Text = '100'
+    end
+    object Button3: TButton
+      Left = 23
+      Top = 272
+      Width = 137
+      Height = 25
+      Caption = 'Delete from BST'
+      TabOrder = 3
+      OnClick = Button3Click
+    end
+    object Edit3: TEdit
+      Left = 24
+      Top = 322
+      Width = 137
+      Height = 21
+      TabOrder = 4
+      Text = '100'
+    end
+    object Edit4: TEdit
+      Left = 24
+      Top = 368
+      Width = 137
+      Height = 21
+      TabOrder = 5
+      Text = '10'
+    end
+    object Button4: TButton
+      Left = 23
+      Top = 395
+      Width = 137
+      Height = 25
+      Caption = 'Random Integers'
+      TabOrder = 6
+      OnClick = Button4Click
+    end
+    object Button1: TButton
+      Left = 23
+      Top = 156
+      Width = 137
+      Height = 25
+      Caption = 'Print BST'
+      TabOrder = 7
+      OnClick = Button1Click
+    end
+    object CheckBox1: TCheckBox
+      Left = 24
+      Top = 35
+      Width = 56
+      Height = 17
+      Caption = 'In-order'
+      Checked = True
+      State = cbChecked
+      TabOrder = 8
+    end
+    object CheckBox2: TCheckBox
+      Left = 23
+      Top = 58
+      Width = 73
+      Height = 17
+      Caption = 'Pre-order'
+      TabOrder = 9
+    end
+    object CheckBox3: TCheckBox
+      Left = 102
+      Top = 58
+      Width = 80
+      Height = 17
+      Caption = 'Post-order'
+      TabOrder = 10
+    end
+    object CheckBox7: TCheckBox
+      Left = 102
+      Top = 123
+      Width = 97
+      Height = 17
+      Caption = 'Level-order'
+      TabOrder = 11
+    end
+    object CheckBox4: TCheckBox
+      Left = 24
+      Top = 100
+      Width = 97
+      Height = 17
+      Caption = 'In-order'
+      TabOrder = 12
+    end
+    object CheckBox5: TCheckBox
+      Left = 102
+      Top = 100
+      Width = 97
+      Height = 17
+      Caption = 'Pre-order'
+      TabOrder = 13
+    end
+    object CheckBox6: TCheckBox
+      Left = 23
+      Top = 123
+      Width = 73
+      Height = 17
+      Caption = 'Post-order'
+      TabOrder = 14
+    end
+    object Button5: TButton
+      Left = 24
+      Top = 426
+      Width = 136
+      Height = 25
+      Caption = 'Clear BST'
+      TabOrder = 15
+      OnClick = Button5Click
+    end
+  end
+  object PageControl1: TPageControl
+    Left = 188
+    Top = 0
+    Width = 682
+    Height = 590
+    ActivePage = TabSheet1
+    Align = alClient
+    TabOrder = 1
+    object TabSheet1: TTabSheet
+      Caption = 'TabSheet1'
+      object Memo1: TMemo
+        Left = 0
+        Top = 0
+        Width = 674
+        Height = 562
+        Align = alClient
+        Lines.Strings = (
+          'Memo1')
+        TabOrder = 0
+      end
+    end
+  end
+end

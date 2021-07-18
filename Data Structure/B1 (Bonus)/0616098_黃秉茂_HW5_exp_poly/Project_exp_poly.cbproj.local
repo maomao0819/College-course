@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020/11/15 15:49:42.000.633,=D:\programming\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2020/11/15 15:49:42.000.086,=D:\programming\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2020/11/15 16:33:47.000.505,D:\programming\Embarcadero\Studio\Projects\HW5\HW5_exp_poly.dfm=D:\programming\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2020/11/15 16:33:47.000.505,D:\programming\Embarcadero\Studio\Projects\HW5\HW5_exp_poly.h=D:\programming\Embarcadero\Studio\Projects\Unit1.h</Transaction>
+    <Transaction>2020/11/15 16:33:47.000.505,D:\programming\Embarcadero\Studio\Projects\HW5\HW5_exp_poly.cpp=D:\programming\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2020/11/15 16:34:39.000.085,D:\programming\Embarcadero\Studio\Projects\HW5\Project_HW5_exp_poly.h=D:\programming\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2020/11/15 16:34:52.000.504,D:\programming\Embarcadero\Studio\Projects\HW5\Project_exp_poly.cbproj=D:\programming\Embarcadero\Studio\Projects\Project1.cbproj</Transaction>
+  </Transactions>
+</BorlandProject>

@@ -1,0 +1,864 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "HW6_BSTree.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm1 *Form1;
+
+// DECLAIR NEW DATA STRUCTURE
+
+typedef struct BSTreeNode
+{
+  struct BSTreeNode * leftchild;
+  int data;
+  struct BSTreeNode * rightchild;
+} BST_NODE;
+
+typedef struct BSTreeCNode
+{
+  struct BSTreeCNode * leftchild;
+  char * data;
+  struct BSTreeCNode * rightchild;
+} BST_CNODE;
+
+typedef struct StackNode
+{
+  BST_NODE *treenode;
+  struct StackNode * next;
+} STACK_NODE;
+
+typedef struct QNode
+{
+  BST_NODE * treenode;
+  struct QNode * next;
+} Q_NODE;
+
+typedef struct DrawTreeNode
+{
+  struct DrawTreeNode * leftchild;
+  int data;
+  int index;
+  struct DrawTreeNode * rightchild;
+} DRAW_TREE_NODE;
+
+// GLOBAL VARIABLE
+
+BST_NODE *root;
+BST_CNODE *Croot;
+STACK_NODE *top;
+Q_NODE *front, *rear;
+String tree_nums = "";
+int n_node = 0;
+
+DRAW_TREE_NODE* DrawRoot;
+//int* X;
+//int* Y;
+//int** treenode;
+//int tempcount;
+
+// PROTOTYPE DECLARATION
+
+BST_NODE * NewBSTNode(int x);
+BST_NODE * SearchBST(BST_NODE * tree, int x);
+BST_NODE * Search_BST_iterative(BST_NODE * node, int x);
+BST_NODE * InsertBSTree_recursive(BST_NODE * node, int x);
+int InsertBST(int x);
+String InsertRandomNumber(int n, int range_min, int range_max);
+BST_NODE * InorderSucc(BST_NODE * node);
+BST_NODE * DeleteBSTree_recursive(BST_NODE * node, int x);
+int DeleteBSTree(int x);
+int DeleteBSTree_another(int x);
+void print_BSTree_inorder(BST_NODE * node);
+void print_BSTree_preorder(BST_NODE * node);
+void print_BSTree_postorder(BST_NODE * node);
+void PrintBST_recursive();
+void push_node(BST_NODE *node);
+BST_NODE * pop_node();
+void AddQueue(BST_NODE *Tnode);
+BST_NODE * DeleteQueue();
+void Inorder_Stack(BST_NODE * node);
+void Postorder_Stack(BST_NODE * node);
+void Preorder_Stack(BST_NODE * node);
+void LevelOrder(BST_NODE *node);
+void PrintBST_nonrecursive();
+void Clear_BST(BST_NODE* BSTnode);
+
+//void Clear_DBST(DRAW_TREE_NODE* DBSTnode);
+int Depth_BTree(BST_NODE* node, int level);
+void determine_X(DRAW_TREE_NODE* node, int left, int right);
+void determine_Y(DRAW_TREE_NODE* node, int top, int bottom, int depth);
+DRAW_TREE_NODE* CopyBSTtoDT(BST_NODE* TreeRoot, int index, int depth);
+void Draw_BST(DRAW_TREE_NODE* DrawRoot, int node_radius);
+
+
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+  : TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+	if (root != NULL)
+	{
+		PrintBST_recursive();
+		PrintBST_nonrecursive();
+		Form1->Memo1->Lines->Add("There are " + IntToStr(n_node)+ " nodes in the BSTree.");
+	}
+	else
+		Form1->Memo1->Lines->Add("The BSTree doesn't exist yet.");
+	Form1->Memo1->Lines->Add("");
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2Click(TObject *Sender)
+{
+	int data = Edit1->Text.ToInt();
+	n_node++;
+	root = InsertBSTree_recursive(root, data);
+	Form1->Memo1->Lines->Add("Insert " + IntToStr(data));
+	PrintBST_recursive();
+	PrintBST_nonrecursive();
+	Form1->Memo1->Lines->Add("There are " + IntToStr(n_node)+ " nodes in the BSTree.");
+	Form1->Memo1->Lines->Add("");
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button3Click(TObject *Sender)
+{
+	int data = Edit1->Text.ToInt();
+	n_node++;
+	int success = InsertBST(data);
+	if (!success)
+		Form1->Memo1->Lines->Add("Fail to insert:" + IntToStr(data));
+	else
+	{
+		Form1->Memo1->Lines->Add("Insert " + IntToStr(data));
+		PrintBST_recursive();
+		PrintBST_nonrecursive();
+		Form1->Memo1->Lines->Add("There are " + IntToStr(n_node)+ " nodes in the BSTree.");
+		Form1->Memo1->Lines->Add("");
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button4Click(TObject *Sender)
+{
+	int target = Edit2->Text.ToInt();
+	root = DeleteBSTree_recursive(root, target);
+	if (root != NULL)
+	{
+		PrintBST_recursive();
+		PrintBST_nonrecursive();
+		Form1->Memo1->Lines->Add("There are " + IntToStr(n_node)+ " nodes in the BSTree.");
+	}
+	else
+		Form1->Memo1->Lines->Add("The BSTree doesn't exist yet.");
+	Form1->Memo1->Lines->Add("");
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button5Click(TObject *Sender)
+{
+    int target = Edit2->Text.ToInt();
+	int success = DeleteBSTree(target);
+	if (root != NULL)
+	{
+		if (success)
+		{
+			Memo1->Lines->Add(IntToStr(target) + " has been deleted.");
+			n_node--;
+		}
+		else
+			Memo1->Lines->Add(IntToStr(target) + " has not been found.");
+		PrintBST_recursive();
+		PrintBST_nonrecursive();
+		Form1->Memo1->Lines->Add("There are " + IntToStr(n_node)+ " nodes in the BSTree.");
+	}
+	else
+		Form1->Memo1->Lines->Add("The BSTree doesn't exist yet.");
+	Form1->Memo1->Lines->Add("");
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button6Click(TObject *Sender)
+{
+	int n = Edit3->Text.ToInt();
+	int range_min = Edit4->Text.ToInt();
+	int range_max = Edit5->Text.ToInt();
+	String nums = InsertRandomNumber(n, range_min, range_max);
+	n_node += n;
+	PrintBST_recursive();
+	PrintBST_nonrecursive();
+	Form1->Memo1->Lines->Add("There are " + IntToStr(n_node)+ " nodes in the BSTree.");
+	Form1->Memo1->Lines->Add("");
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button7Click(TObject *Sender)
+{
+    if (root != NULL)
+	{
+		Clear_BST(root);
+        root = NULL;
+	    Form1->Memo1->Lines->Add("The BSTree has been cleared.");
+		Clear_DBST(DrawRoot);
+	}
+	else
+		Form1->Memo1->Lines->Add("The BSTree doesn't exist yet.");
+	Form1->Memo1->Lines->Add("");
+}
+//---------------------------------------------------------------------------
+
+// FUNCTION DEFINITION
+
+BST_NODE * NewBSTNode(int x)
+{
+	BST_NODE * node = new BST_NODE;
+	node->data = x;
+	node->leftchild = NULL;
+	node->rightchild = NULL;
+	return node;
+}
+
+BST_NODE * SearchBST(BST_NODE * tree, int x)
+{
+	if (tree == NULL)
+		return NULL;
+	if (x == tree->data)
+		return tree;
+	if (x < tree->data)
+		return SearchBST(tree->leftchild, x);
+	return SearchBST(tree->rightchild, x);
+}
+
+BST_NODE * Search_BST_iterative(BST_NODE * node, int x)
+{
+	while (node != NULL)
+	{
+		if (x == node->data)
+			return node;
+		if (x < node->data)
+			node = node->leftchild;
+		else
+			node = node->rightchild;
+	}
+	return NULL;
+}
+
+BST_NODE * InsertBSTree_recursive(BST_NODE * node, int x)
+{
+	if (node == NULL)
+		return NewBSTNode(x);
+ 	if (x < node->data)
+		node->leftchild = InsertBSTree_recursive(node->leftchild, x);
+	else
+		node->rightchild = InsertBSTree_recursive(node->rightchild, x);
+	return node;
+}
+
+int InsertBST(int x)
+{
+	BST_NODE *p, *q;
+    p = root;
+    q = NULL;
+    while (p != NULL)
+    {
+		q = p;
+		// 不考慮重複則可省略
+        // if (x == p->data) return 0;
+        if (x < p->data)
+            p = p->leftchild;
+        else
+            p = p->rightchild;
+    }
+	// p = (BST_NODE *) malloc (sizeof(BSTreeNode));
+	p = new BST_NODE;
+    p->data = x;
+    p->leftchild = p->rightchild = NULL;
+	if (root == NULL)
+		root = p;
+	else if (x < q->data)
+		q->leftchild = p;
+    else
+		q->rightchild = p;
+    return 1;
+}
+
+String InsertRandomNumber(int n, int range_min, int range_max)
+{
+	srand(time(NULL));
+	int data = 0;
+	int range = range_max - range_min + 1;
+	String nums = "";
+	for (int i = 0; i < n; i++)
+	{
+		data = rand() % range + range_min;
+		int success_code = InsertBST(data);
+		nums += IntToStr(data) + " ";
+	}
+	Form1->Memo1->Lines->Add("Insert random number: " + nums);
+	return nums;
+}
+
+BST_NODE * InorderSucc(BST_NODE * node)
+{
+	BST_NODE * p = node;
+	// for (p = node; p->leftchild != NULL; p = p->leftchild)
+	while (p->leftchild != NULL)
+		p = p->leftchild;
+	return p;
+}
+
+BST_NODE * DeleteBSTree_recursive(BST_NODE * node, int x)
+{
+	BST_NODE * temp;
+	if (node == NULL)
+	{
+		Form1->Memo1->Lines->Add(IntToStr(x) + " has not been found.");
+		return node;
+	}
+	if (x < node->data)
+		node->leftchild = DeleteBSTree_recursive(node->leftchild, x);
+	else if (x > node->data)
+		node->rightchild = DeleteBSTree_recursive(node->rightchild, x);
+	else // x found in node
+	{
+		if ((node->leftchild == NULL) || (node->rightchild == NULL))
+		{
+			temp = node->leftchild ? node->leftchild : node->rightchild;
+			if (temp == NULL) // node is a leaf itself
+ 			{
+ 				temp = node;
+ 				node = NULL;
+ 			}
+ 			else
+ 				* node = * temp;
+			// Copy the contents of the only/non-empty child
+			n_node--;
+			Form1->Memo1->Lines->Add(IntToStr(x) + " has been deleted.");
+ 			free(temp);
+ 		}
+ 		else // node has two children
+ 		{
+ 			temp = InorderSucc(node->rightchild);
+ 			node->data = temp->data;
+ 			node->rightchild = DeleteBSTree_recursive(node->rightchild, temp->data);
+ 		}
+ 	}
+ 	return node;
+}
+
+int DeleteBSTree(int x)
+{
+	BST_NODE *p , *parent, *k, *f;
+	p = root;
+	parent = NULL;
+	while (p != NULL)
+	{
+        if (x == p->data) // 找到 x 所在的節點 p 了
+        {
+			if ((p->leftchild == NULL) && (p->rightchild == NULL))
+                k = NULL; // p 為樹葉節點
+            else if (p->leftchild != NULL ) // p 含有左子樹
+            {
+                f = p; // 找出 p 左子樹的最右樹葉
+                k = p->leftchild;
+                while (k->rightchild !=NULL)
+				{
+                    f = k;
+                    k = k->rightchild;
+                }    // k 即為 p 左子樹的最右樹葉
+				if (p == f)         // k 即為 p 的左兒子
+                    f->leftchild = k->leftchild;
+				else
+                    f->rightchild = k->leftchild;
+			}
+            else        // p 無左子樹, 檢查右子樹
+            {
+                f = p; //找出 p 右子樹的最左樹葉
+                k = p->rightchild;
+                while (k->leftchild != NULL)
+                {
+					f = k;
+                    k = k ->leftchild;
+                }    // k 即為 p 右子樹的最左樹葉
+                if (p == f)        // k 即為 p 的右兒子
+                    f->rightchild = k->rightchild;
+                else
+                    f->leftchild = k->rightchild;
+			}
+            if (k != NULL)     // k 挪至原 p 處, 繼承 p 的左右指標
+            {
+                k->leftchild = p->leftchild;
+                k->rightchild = p->rightchild;
+            }
+            if (parent == NULL)
+                root = k;
+			else
+            {
+                if (x < parent->data)    //決定k是parent的左或右兒子
+                    parent->leftchild = k;
+                else
+                    parent->rightchild = k;
+            }
+			free(p);
+            return 1; //成功地刪除 x，於此傳回1返回呼叫處
+        }
+        else //尚未找到x，繼續往下一階層找
+        {
+            parent = p;
+            if (x < p->data)
+                p = p->leftchild;
+			else
+                p = p->rightchild;
+        }
+    }
+    //未找到x，傳回0
+    return 0;
+}
+
+int DeleteBSTree_another(int x)
+{
+	BST_NODE *p, *parent, *k, *f;
+	p = root;
+ 	parent = NULL;
+	while (p != NULL)
+ 	{
+		if (x == p->data)// 找到 x 所在的節點了
+		{
+			if ((p->leftchild == NULL) && (p->rightchild == NULL)) //p為樹葉節點
+ 			{
+				if (p == root)
+ 					root = NULL;
+				else if (parent->leftchild == p)
+					parent->leftchild = NULL;
+				else
+					parent->rightchild = NULL;
+	 			free(p);
+	 		}
+	 		else
+	 		{
+	 			if (p->leftchild != NULL ) // p 含有左子樹
+	 			{
+	 				f = p;// 找出 p 左子樹的最右樹葉
+	 				k = p->leftchild;
+	 				while (k->rightchild !=NULL)
+	 				{
+	 					f = k;
+	 					k = k->rightchild;
+	 				} // k 即為 p 左子樹的最右樹葉
+	 				if (p == f) // k 即為 p 的左兒子
+	 					f->leftchild = k->leftchild;
+	 				else
+	 					f->rightchild = k->leftchild;
+	 			}
+	 			else // p 無左子樹, 檢查右子樹
+	 			{
+	 				f = p; //找出 p 右子樹的最左樹葉
+	 				k = p->rightchild;
+	 				while (k->leftchild != NULL)
+	 				{
+	 					f = k;
+	 					k = k ->leftchild;
+	 				} // k 即為 p 右子樹的最左樹葉
+	 				if (p == f) // k 即為 p 的兒子
+	 					f->rightchild = k->rightchild;
+	 				else
+	 					f->leftchild = k->rightchild;
+	 			}
+	 			p->data = k->data;
+	 			free(k);
+	 		}
+	 		return 1; //成功地刪除x，於此傳回1返回呼叫處
+		}
+	 	else //尚未找到x，繼續往下一階層找
+	 	{
+	 		parent = p;
+	 		if (x < p->data)
+	 			p = p->leftchild;
+	 		else
+	 			p = p->rightchild;
+	 	}
+	}
+	return 0; //未找到x，傳回0
+}
+
+void print_BSTree_inorder(BST_NODE * node)
+{
+	if (node != NULL)
+	{
+		print_BSTree_inorder(node->leftchild);
+		tree_nums += IntToStr(node->data) + "_";
+		print_BSTree_inorder(node->rightchild);
+	}
+}
+
+void print_BSTree_preorder(BST_NODE * node)
+{
+	if (node != NULL)
+	{
+		tree_nums += IntToStr(node->data) + "_";
+		print_BSTree_preorder(node->leftchild);
+		print_BSTree_preorder(node->rightchild);
+	}
+}
+
+void print_BSTree_postorder(BST_NODE * node)
+{
+	if (node != NULL)
+	{
+		print_BSTree_postorder(node->leftchild);
+		print_BSTree_postorder(node->rightchild);
+		tree_nums += IntToStr(node->data) + "_";
+	}
+}
+
+void PrintBST_recursive()
+{
+	tree_nums = "";
+	if (Form1->CheckBox1->Checked)
+	{
+		print_BSTree_inorder(root);
+		Form1->Memo1->Lines->Add("In-order (recursively):\t" + tree_nums);
+	}
+	if (Form1->CheckBox2->Checked)
+	{
+		print_BSTree_preorder(root);
+		Form1->Memo1->Lines->Add("Pre-order (recursively):\t" + tree_nums);
+	}
+	if (Form1->CheckBox3->Checked)
+	{
+		print_BSTree_postorder(root);
+		Form1->Memo1->Lines->Add("Post-order (recursively):\t" + tree_nums);
+	}
+}
+
+void push_node(BST_NODE *node)
+{
+	STACK_NODE *old_top;
+	old_top = top;
+	// top = (STACK_NODE *) malloc (sizeof(STACK_NODE));
+	top = new STACK_NODE;
+	top->treenode = node;
+	top->next = old_top;
+}
+
+BST_NODE *pop_node()
+{
+	BST_NODE *Tnode;
+	STACK_NODE *old_top;
+	if (top == NULL)
+		Form1->Memo1->Lines->Add("Stack is EMPTY!");
+	else
+	{
+		Tnode = top->treenode;
+        old_top = top;
+		top = top->next;
+        free(old_top);
+		return Tnode;
+    }
+}
+
+void AddQueue(BST_NODE *Tnode)
+{
+	Q_NODE *node;
+	// node = (Q_NODE *) malloc (sizeof(Q_NODE));
+	node = new Q_NODE;
+	node->treenode = Tnode;
+	node->next = NULL;
+    if (front == NULL)
+        front = node;
+    else
+		rear->next = node;
+	rear = node;
+}
+
+BST_NODE *DeleteQueue()
+{
+    BST_NODE *Tnode;
+    Q_NODE *old_front;
+	if (front == NULL)
+		Form1->Memo1->Lines->Add("Queue is EMPTY!");
+	else
+	{
+		Tnode = front->treenode;
+		old_front = front;
+		front = front->next;
+        free(old_front);
+        return Tnode;
+	}
+}
+
+void Inorder_Stack(BST_NODE * node)
+{
+    do
+	{
+		// push all left children
+        while (node != NULL)
+        {
+            push_node(node);
+            node = node->leftchild;
+		}
+		// inorder printing and check right child
+        if (top != NULL)
+        {
+            node = pop_node();
+			tree_nums += IntToStr(node->data) + "_";
+            node = node->rightchild;
+		}
+	} while ((top != NULL) || (node != NULL));
+	// top == NULL: stack is empty
+	// node == NULL: no right child
+}
+
+void Preorder_Stack(BST_NODE * node)
+{
+	do
+	{
+		// push all left children
+		while (node != NULL)
+		{
+			tree_nums += IntToStr(node->data) + "_";
+			push_node(node);
+            node = node->leftchild;
+		}
+		if (top != NULL)
+        {
+			node = pop_node();
+			node = node->rightchild;
+		}
+	} while ((top != NULL) || (node != NULL));
+}
+
+void Postorder_Stack(BST_NODE * node)
+{
+    do
+    {
+		// push all left children
+		while (node != NULL)
+        {
+			tree_nums = IntToStr(node->data) + "_" + tree_nums;
+            push_node(node);
+            node = node->rightchild;
+		}
+        if (top != NULL)
+        {
+            node = pop_node();
+            node = node->leftchild;
+        }
+    } while ((top != NULL) || (node != NULL));
+}
+
+void LevelOrder(BST_NODE *node)
+{
+	AddQueue(node);
+	while (front != NULL)
+	{
+		node = DeleteQueue();
+		tree_nums += IntToStr(node->data) + "_";
+		if (node->leftchild != NULL)
+			AddQueue(node->leftchild);
+		if (node->rightchild != NULL)
+			AddQueue(node->rightchild);
+	}
+}
+
+void PrintBST_nonrecursive()
+{
+	tree_nums = "";
+	if (Form1->CheckBox4->Checked)
+	{
+
+		Inorder_Stack(root);
+		Form1->Memo1->Lines->Add("In-order (stack and loop):\t" + tree_nums);
+	}
+	if (Form1->CheckBox5->Checked)
+	{
+		Preorder_Stack(root);
+		Form1->Memo1->Lines->Add("Pre-order (stack and loop):\t" + tree_nums);
+	}
+	if (Form1->CheckBox6->Checked)
+	{
+		Postorder_Stack(root);
+		Form1->Memo1->Lines->Add("Post-order (stack and loop):\t" + tree_nums);
+	}
+	if (Form1->CheckBox7->Checked)
+	{
+		LevelOrder(root);
+		Form1->Memo1->Lines->Add("Level-order (queue and loop):\t" + tree_nums);
+	}
+}
+
+/*
+int Depth_BTree(BST_NODE* node, int level, int site)
+{
+    int depth, l_depth, r_depth;
+    if (node!=NULL)
+    {
+        treenode[tempcount][0] = node->data;
+        treenode[tempcount][1] = level;
+        treenode[tempcount][2] = site;
+        tempcount++;
+        l_depth = Depth_BTree(node->leftchild, (level + 1), site * 2);
+        r_depth = Depth_BTree(node->rightchild, (level + 1), site * 2 + 1);
+        depth = l_depth > r_depth ? l_depth : r_depth;
+        return depth;
+    }
+    else
+        return (level - 1);
+}
+*/
+
+int Depth_BTree(BST_NODE* node, int level)
+{
+    int depth, l_depth, r_depth;
+	if (node != NULL)
+    {
+        //treenode[tempcount][0] = node->data;
+        //treenode[tempcount][3] = site;
+        //tempcount++;
+		l_depth = Depth_BTree(node->leftchild, (level + 1));
+		r_depth = Depth_BTree(node->rightchild, (level + 1));
+        depth = l_depth > r_depth ? l_depth : r_depth;
+        return depth;
+        }
+    else
+		return (level - 1);
+}
+
+/*
+int** Find_Coordinate(int** data, int data_count, int total_node)
+{
+    BST_NODE *p;
+    int m, L, R, x, level;
+    for (int i = 0; i < data_count; i++)
+    {
+        p = root;
+        L = 1;
+        R = total_node;
+        x = data[i][0];
+        level = 1;
+        do
+        {
+            m = (L + R) / 2;
+            if (x == p->data)
+                break;
+            else if (x < p->data)
+            {
+                R = m - 1;
+                p = p->leftchild;
+            }
+            else
+            {
+                L = m + 1;
+                p = p->rightchild;
+            }
+            level += 1;
+        } while(p->data != NULL);
+        data[i][1] = m;
+        data[i][2] = level;
+    }
+    return data;
+}
+*/
+
+void determine_X(DRAW_TREE_NODE* node, int left, int right)
+{
+    if (node != NULL)
+    {
+        int m = (left+right)/2;
+        X[node->index] = (m == 0) ? left : m;
+        determine_X(node->leftchild, left, (m - 1 < left) ? left : m - 1);
+        determine_X(node->rightchild, (m + 1 < right) ? m + 1 : right, right);
+    }
+}
+
+void determine_Y(DRAW_TREE_NODE* node, int top, int bottom, int depth)
+{
+    int detH = (top + bottom) / (depth + 1);
+    for (int i = 0; i < depth + 1; i++)
+        Y[i] = (detH < 10) ? 10 * i : detH * i;
+}
+
+DRAW_TREE_NODE* CopyBSTtoDT(BST_NODE* TreeRoot, int index, int depth)
+{
+    if (TreeRoot==NULL)
+        return NULL;
+	// DRAW_TREE_NODE* copyRoot = (DRAW_TREE_NODE*)malloc(sizeof(DrawTreeNode));
+	DRAW_TREE_NODE* copyRoot = new DRAW_TREE_NODE;
+    copyRoot->data = TreeRoot->data;
+    copyRoot->index = index;
+    // copyRoot->y = ceil(log(index + 1) / log(2.0));
+    // copyRoot->x = pow(2, (depth - copyRoot->y)) + pow(2, (depth - copyRoot->y) + 1)
+    // *     (index - (pow(2, copyRoot->y - 1) - 1) - 1);
+    copyRoot->leftchild = CopyBSTtoDT(TreeRoot->leftchild, 2 * index, depth);
+    copyRoot->rightchild = CopyBSTtoDT(TreeRoot->rightchild, 2 * index + 1, depth);
+    return copyRoot;
+}
+
+// void Draw_BST(DRAW_TREE_NODE* DrawRoot, int detW, int detH, int node_radius)
+//void Draw_BST(DRAW_TREE_NODE* DrawRoot, int node_radius)
+//{
+//	if (DrawRoot!=NULL)
+//	{
+//        int level = ceil(log(DrawRoot->index+1)/log(2.0));
+//        if (DrawRoot->leftchild!=NULL)
+//        {
+//			Form1->Image1->Canvas->MoveTo(X[DrawRoot->index], Y[level]);
+//			Form1->Image1->Canvas->LineTo(X[DrawRoot->leftchild->index], Y[level + 1]);
+//            //Form1->Image1->Canvas->MoveTo((DrawRoot->x) * detW, (DrawRoot->y) * detH);
+//            //Form1->Image1->Canvas->LineTo((DrawRoot->leftchild->x) * detW, (DrawRoot->leftchild->y) * detH);
+//
+//        }
+//        if (DrawRoot->rightchild)
+//        {
+//            Form1->Image1->Canvas->MoveTo(X[DrawRoot->index], Y[level]);\
+//			Form1->Image1->Canvas->LineTo(X[DrawRoot->rightchild->index], Y[level + 1]);
+//            //Form1->Image1->Canvas->MoveTo((DrawRoot->x) * detW, (DrawRoot->y) * detH);
+//            //Form1->Image1->Canvas->LineTo((DrawRoot->rightchild->x) * detW, (DrawRoot->rightchild->y) * detH);
+//        }
+//        Form1->Image1->Canvas->Ellipse(X[DrawRoot->index] - node_radius,
+//        Y[level] - node_radius,
+//		X[DrawRoot->index] + node_radius,
+//        Y[level] + node_radius);
+//        Form1->Image1->Canvas->TextOutA(X[DrawRoot->index] - 5, Y[level] - 7, IntToStr(DrawRoot->data));
+//        //Form1->Image1->Canvas->Ellipse((X[DrawRoot->index]- node_radius,
+//        //                 ((DrawRoot->y) * detH) - node_radius,
+//        //                 ((DrawRoot->x) * detW) + node_radius,
+//        //                 ((DrawRoot->y) * detH) + node_radius);
+//        //Form1->Image1->Canvas->TextOutA((DrawRoot->x) * detW - 5, (DrawRoot->y) * detH - 8, IntToStr(DrawRoot->data));
+//        // Draw_BST(DrawRoot->leftchild, detW, detH, node_radius);
+//        // Draw_BST(DrawRoot->rightchild, detW, detH, node_radius);
+//        Draw_BST(DrawRoot->leftchild, node_radius);
+//        Draw_BST(DrawRoot->rightchild, node_radius);
+//	}
+//}
+
+
+void Clear_BST(BST_NODE * BSTnode)
+{
+	if (BSTnode != NULL)
+	{
+		Clear_BST(BSTnode->leftchild);
+		Clear_BST(BSTnode->rightchild);
+		delete(BSTnode);
+	}
+}
+
+void Clear_DBST(DRAW_TREE_NODE * DBSTnode)
+{
+    if (DBSTnode != NULL)
+    {
+        Clear_DBST(DBSTnode->leftchild);
+        Clear_DBST(DBSTnode->rightchild);
+        delete(DBSTnode);
+    }
+}
+
+

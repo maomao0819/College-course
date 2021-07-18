@@ -1,0 +1,5 @@
+﻿  Increment.cpp
+c:\users\醜茂\desktop\新增資料夾\consoleapplication1\consoleapplication1\increment.cpp(7): error C2572: 'Increment::Increment': 預設引數重複定義: 參數 1
+  c:\users\醜茂\desktop\新增資料夾\consoleapplication1\consoleapplication1\increment.h(6): note: 請參閱 'Increment::Increment' 的宣告
+c:\users\醜茂\desktop\新增資料夾\consoleapplication1\consoleapplication1\increment.cpp(7): error C2572: 'Increment::Increment': 預設引數重複定義: 參數 2
+  c:\users\醜茂\desktop\新增資料夾\consoleapplication1\consoleapplication1\increment.h(6): note: 請參閱 'Increment::Increment' 的宣告

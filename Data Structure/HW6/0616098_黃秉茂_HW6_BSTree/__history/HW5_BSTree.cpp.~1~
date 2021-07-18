@@ -1,0 +1,550 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "HW5_BSTree.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm1 *Form1;
+
+// DECLAIR NEW DATA STRUCTURE
+
+typedef struct BSTreeNode
+{
+  struct BSTreeNode * leftchild;
+  int data;
+  struct BSTreeNode * rightchild;
+} BST_NODE;
+
+typedef struct BSTreeCNode
+{
+  struct BSTreeCNode * leftchild;
+  char * data;
+  struct BSTreeCNode * rightchild;
+} BST_CNODE;
+
+typedef struct StackNode
+{
+  BST_NODE *treenode;
+  struct StackNode * next;
+} STACK_NODE;
+
+typedef struct QNode
+{
+  BST_NODE * treenode;
+  struct QNode * next;
+} Q_NODE;
+
+typedef struct DrawTreeNode
+{
+  struct DrawTreeNode * leftchild;
+  int data;
+  int index;
+  struct DrawTreeNode * rightchild;
+} DRAW_TREE_NODE;
+
+// GLOBAL VARIABLE
+
+BST_NODE *root;
+BST_CNODE *Croot;
+STACK_NODE *top;
+Q_NODE *front, *rear;
+DRAW_TREE_NODE* DrawRoot;
+int* X;
+int* Y;
+String tree = "";
+int count_node = 0;
+int** treenode;
+
+int tempcount;
+
+// PROTOTYPE DECLARATION
+
+void push_node(BST_NODE *node);
+BST_NODE * pop_node();
+void AddQueue(BST_NODE *Tnode);
+BST_NODE * DeleteQueue();
+void LevelOrder(BST_NODE *node);
+BST_NODE * SearchBST(BST_NODE * tree, int x);
+BST_NODE * Search_BST_iterative(BST_NODE * node, int x);
+int InsertBST(int x);
+int DeleteBSTree(int x);
+int DeleteBSTree(int x);
+void print_BSTree_inorder(BST_NODE * node);
+void print_BSTree_preorder(BST_NODE * node);
+void print_BSTree_postorder(BST_NODE * node);
+void Inorder_Stack(BST_NODE * node);
+void Postorder_Stack(BST_NODE * node);
+void Preorder_Stack(BST_NODE * node);
+int Depth_BTree(BST_NODE* node, int level);
+void determine_X(DRAW_TREE_NODE* node, int left, int right);
+void determine_Y(DRAW_TREE_NODE* node, int top, int bottom, int depth);
+DRAW_TREE_NODE* CopyBSTtoDT(BST_NODE* TreeRoot, int index, int depth);
+void Draw_BST(DRAW_TREE_NODE* DrawRoot, int node_radius);
+void Clear_BST(BST_NODE* BSTnode);
+void Clear_DBST(DRAW_TREE_NODE* DBSTnode);
+
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+  : TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+
+// FUNCTION DEFINITION
+
+void push_node(BST_NODE *node)
+{
+    STACK_NODE *old_top;
+    old_top = top;
+    top = (STACK_NODE *) malloc (sizeof(STACK_NODE));
+    top->treenode = node;
+    top->next = old_top;
+}
+
+BST_NODE *pop_node()
+{
+    BST_NODE *Tnode;
+    STACK_NODE *old_top;
+	if (top == NULL);
+		Form1->Memo1->Lines->Add("Stack is EMPTY!");
+	else
+    {
+        Tnode = top->treenode;
+        old_top = top;
+        top = top->next;
+        free(old_top);
+        return Tnode;
+    }
+}
+
+void AddQueue(BST_NODE *Tnode)
+{
+    Q_NODE *node;
+	node = (Q_NODE *) malloc (sizeof(Q_NODE));
+    node->treenode = Tnode;
+    node->next = NULL;
+    if (front == NULL)
+        front = node;
+    else
+        rear->next = node;
+	rear = node;
+}
+
+BST_NODE *DeleteQueue()
+{
+    BST_NODE *Tnode;
+    Q_NODE *old_front;
+	if (front == NULL) ;
+		Form1->Memo1->Lines->Add("Queue is EMPTY!");
+	else
+    {
+        Tnode = front->treenode;
+        old_front = front;
+        front = front->next;
+        free(old_front);
+        return Tnode;
+    }
+}
+
+void LevelOrder(BST_NODE *node)
+{
+    AddQueue(node);
+    while (front != NULL)
+    {
+        node = DeleteQueue();
+        tree += IntToStr(node->data) + "_";
+        if (node->leftchild != NULL)
+            AddQueue(node->leftchild);
+        if (node->rightchild != NULL)
+            AddQueue(node->rightchild);
+    }
+}
+
+BST_NODE * SearchBST(BST_NODE * tree, int x)
+{
+	if (tree == NULL)
+		return NULL;
+	if (x == tree->data)
+		return tree;
+	if (x < tree->data)
+		return SearchBST(tree->leftchild, x);
+	return SearchBST(tree->rightchild, x);
+}
+
+BST_NODE * Search_BST_iterative(BST_NODE * node, int x)
+{
+	while (node != NULL)
+	{
+		if (x == node->data)
+			return node;
+		if (x < node->data)
+			node = node->leftchild;
+		else
+			node = node->rightchild;
+	}
+	return NULL;
+}
+
+int InsertBST(int x)
+{
+    BST_NODE *p, *q;
+    p = root;
+    q = NULL;
+    while (p != NULL)
+    {
+        q = p;
+        // if (x == p->data) return 0;
+        if (x < p->data)
+            p = p->leftchild;
+        else
+            p = p->rightchild;
+    }
+    // p = (BST_NODE *) malloc (sizeof(BSTreeNode));
+    p = new BST_NODE;
+    p->data = x;
+    p->leftchild = p->rightchild = NULL;
+    if (root == NULL)
+    {
+        root = p;
+        count_node++;
+    }
+    else if (x < q->data)
+    {
+        q->leftchild = p;
+        count_node++;
+    }
+    else
+    {
+        q->rightchild = p;
+        count_node++;
+    }
+    return 1;
+}
+
+int DeleteBSTree(int x)
+{
+    BST_NODE *p , *father, *k, *f;
+    p = root; father = NULL;
+    while (p != NULL)
+    {
+        if (x == p->data) // 找到 x 所在的節點 p 了
+        {
+            if ((p->leftchild == NULL) && (p->rightchild == NULL))
+                k = NULL; // p 為樹葉節點
+            else if (p->leftchild != NULL ) // p 含有左子樹
+            {
+                f = p; // 找出 p 左子樹的最右樹葉
+                k = p->leftchild;
+                while (k->rightchild !=NULL)
+                {
+                    f = k;
+                    k = k->rightchild;
+                }    // k 即為 p 左子樹的最右樹葉
+                if (p == f)         // k 即為 p 的左兒子
+                    f->leftchild = k->leftchild;
+                else
+                    f->rightchild = k->leftchild;
+            }
+            else        // p 無左子樹, 檢查右子樹
+            {
+                f = p; //找出 p 右子樹的最左樹葉
+                k = p->rightchild;
+                while (k->leftchild != NULL)
+                {
+                    f = k;
+                    k = k ->leftchild;
+                }    // k 即為 p 右子樹的最左樹葉
+                if (p == f)        // k 即為 p 的右兒子
+                    f->rightchild = k->rightchild;
+                else
+                    f->leftchild = k->rightchild;
+            }
+            if (k != NULL)     // k 挪至原 p 處, 繼承 p 的左右指標
+            {
+                k->leftchild = p->leftchild;
+                k->rightchild = p->rightchild;
+            }
+            if (father == NULL)
+                root = k;
+            else
+            {
+                if (x < father->data)    //決定k是father的左或右兒子
+                    father->leftchild = k;
+                else
+                    father->rightchild = k;
+            }
+            free(p);
+            count_node--;
+            return 1; //成功地刪除 x，於此傳回1返回呼叫處
+        }
+        else //尚未找到x，繼續往下一階層找
+        {
+            father = p;
+            if (x < p->data)
+                p = p->leftchild;
+            else
+                p = p->rightchild;
+        }
+    }
+    //未找到x，傳回0
+    return 0;
+}
+
+void print_BSTree_inorder(BST_NODE * node)
+{
+	if (node != NULL)
+    {
+        print_BSTree(node->leftchild);
+        tree += IntToStr(node->data) + "_";
+        print_BSTree(node->rightchild);
+	}
+}
+
+void print_BSTree_preorder(BST_NODE * node)
+{
+    if (node != NULL)
+	{
+		tree += node->data + "+";
+        print_BSTree_preorder(node->leftchild);
+		print_BSTree_preorder(node->rightchild);
+	}
+}
+
+void print_BSTree_postorder(BST_NODE * node)
+{
+    if (node != NULL)
+	{
+		print_BSTree_postorder(node->leftchild);
+		print_BSTree_postorder(node->rightchild);
+		tree += node->data + "-";
+	}
+}
+
+void Inorder_Stack(BST_NODE * node)
+{
+    // node = root;
+    do
+	{
+		// phsh all left children
+        while (node != NULL)
+        {
+            push_node(node);
+            node = node->leftchild;
+		}
+		// inorder printing and check right child
+        if (top != NULL)
+        {
+            node = pop_node();
+			tree += IntToStr(node->data) + "_";
+            node = node->rightchild;
+		}
+	} while ((top != NULL) || (node != NULL));
+	// top == NULL: stack is empty
+	// node == NULL: no right child
+}
+
+void Postorder_Stack(BST_NODE * node)
+{
+    do
+    {
+		// push all left children
+		while (node != NULL)
+        {
+            tree = IntToStr(node->data) + "_" + tree;
+            push_node(node);
+            node = node->rightchild;
+		}
+        if (top != NULL)
+        {
+            node = pop_node();
+            node = node->leftchild;
+        }
+    } while ((top != NULL) || (node != NULL));
+}
+
+void Preorder_Stack(BST_NODE * node)
+{
+    do
+    {
+		// push all left children
+		while (node != NULL)
+        {
+            tree += IntToStr(node->data) + "_";
+            push_node(node);
+            node = node->leftchild;
+		}
+        if (top != NULL)
+        {
+            node = pop_node();
+            node = node->rightchild;
+        }
+    } while ((top != NULL) || (node != NULL));
+}
+
+
+/*
+int Depth_BTree(BST_NODE* node, int level, int site)
+{
+    int depth, l_depth, r_depth;
+    if (node!=NULL)
+    {
+        treenode[tempcount][0] = node->data;
+        treenode[tempcount][1] = level;
+        treenode[tempcount][2] = site;
+        tempcount++;
+        l_depth = Depth_BTree(node->leftchild, (level + 1), site * 2);
+        r_depth = Depth_BTree(node->rightchild, (level + 1), site * 2 + 1);
+        depth = l_depth > r_depth ? l_depth : r_depth;
+        return depth;
+    }
+    else
+        return (level - 1);
+}
+*/
+
+int Depth_BTree(BST_NODE* node, int level)
+{
+    int depth, l_depth, r_depth;
+    if (node!=NULL)
+    {
+        //treenode[tempcount][0] = node->data;
+        //treenode[tempcount][3] = site;
+        //tempcount++;
+        l_depth = Depth_BTree(node->leftchild, (level+1));
+        r_depth = Depth_BTree(node->rightchild, (level+1));
+        depth = l_depth > r_depth ? l_depth : r_depth;
+        return depth;
+        }
+    else
+        return (level-1);
+}
+
+/*
+int** Find_Coordinate(int** data, int data_count, int total_node)
+{
+    BST_NODE *p;
+    int m, L, R, x, level;
+    for (int i = 0; i < data_count; i++)
+    {
+        p = root;
+        L = 1;
+        R = total_node;
+        x = data[i][0];
+        level = 1;
+        do
+        {
+            m = (L + R) / 2;
+            if (x == p->data)
+                break;
+            else if (x < p->data)
+            {
+                R = m - 1;
+                p = p->leftchild;
+            }
+            else
+            {
+                L = m + 1;
+                p = p->rightchild;
+            }
+            level += 1;
+        } while(p->data != NULL);
+        data[i][1] = m;
+        data[i][2] = level;
+    }
+    return data;
+}
+*/
+
+void determine_X(DRAW_TREE_NODE* node, int left, int right)
+{
+    if (node != NULL)
+    {
+        int m = (left+right)/2;
+        X[node->index] = (m == 0) ? left : m;
+        determine_X(node->leftchild, left, (m - 1 < left) ? left : m - 1);
+        determine_X(node->rightchild, (m + 1 < right) ? m + 1 : right, right);
+    }
+}
+
+void determine_Y(DRAW_TREE_NODE* node, int top, int bottom, int depth)
+{
+    int detH = (top + bottom) / (depth + 1);
+    for (int i = 0; i < depth + 1; i++)
+        Y[i] = (detH < 10) ? 10 * i : detH * i;
+}
+
+DRAW_TREE_NODE* CopyBSTtoDT(BST_NODE* TreeRoot, int index, int depth)
+{
+    if (TreeRoot==NULL)
+        return NULL;
+    DRAW_TREE_NODE* copyRoot = (DRAW_TREE_NODE*)malloc(sizeof(DrawTreeNode));
+    copyRoot->data = TreeRoot->data;
+    copyRoot->index = index;
+    // copyRoot->y = ceil(log(index + 1) / log(2.0));
+    // copyRoot->x = pow(2, (depth - copyRoot->y)) + pow(2, (depth - copyRoot->y) + 1)
+    // *     (index - (pow(2, copyRoot->y - 1) - 1) - 1);
+    copyRoot->leftchild = CopyBSTtoDT(TreeRoot->leftchild, 2 * index, depth);
+    copyRoot->rightchild = CopyBSTtoDT(TreeRoot->rightchild, 2 * index + 1, depth);
+    return copyRoot;
+}
+
+// void Draw_BST(DRAW_TREE_NODE* DrawRoot, int detW, int detH, int node_radius)
+void Draw_BST(DRAW_TREE_NODE* DrawRoot, int node_radius)
+{
+    if (DrawRoot!=NULL)
+    {
+        int level = ceil(log(DrawRoot->index+1)/log(2.0));
+        if (DrawRoot->leftchild!=NULL)
+        {
+            Form1->Image1->Canvas->MoveTo(X[DrawRoot->index], Y[level]);
+            Form1->Image1->Canvas->LineTo(X[DrawRoot->leftchild->index], Y[level + 1]);
+            //Form1->Image1->Canvas->MoveTo((DrawRoot->x) * detW, (DrawRoot->y) * detH);
+            //Form1->Image1->Canvas->LineTo((DrawRoot->leftchild->x) * detW, (DrawRoot->leftchild->y) * detH);
+
+        }
+        if (DrawRoot->rightchild)
+        {
+            Form1->Image1->Canvas->MoveTo(X[DrawRoot->index], Y[level]);\
+            Form1->Image1->Canvas->LineTo(X[DrawRoot->rightchild->index], Y[level + 1]);
+            //Form1->Image1->Canvas->MoveTo((DrawRoot->x) * detW, (DrawRoot->y) * detH);
+            //Form1->Image1->Canvas->LineTo((DrawRoot->rightchild->x) * detW, (DrawRoot->rightchild->y) * detH);
+        }
+        Form1->Image1->Canvas->Ellipse(X[DrawRoot->index] - node_radius,
+        Y[level] - node_radius,
+        X[DrawRoot->index] + node_radius,
+        Y[level] + node_radius);
+        Form1->Image1->Canvas->TextOutA(X[DrawRoot->index] - 5, Y[level] - 7, IntToStr(DrawRoot->data));
+        //Form1->Image1->Canvas->Ellipse((X[DrawRoot->index]- node_radius,
+        //                 ((DrawRoot->y) * detH) - node_radius,
+        //                 ((DrawRoot->x) * detW) + node_radius,
+        //                 ((DrawRoot->y) * detH) + node_radius);
+        //Form1->Image1->Canvas->TextOutA((DrawRoot->x) * detW - 5, (DrawRoot->y) * detH - 8, IntToStr(DrawRoot->data));
+        // Draw_BST(DrawRoot->leftchild, detW, detH, node_radius);
+        // Draw_BST(DrawRoot->rightchild, detW, detH, node_radius);
+        Draw_BST(DrawRoot->leftchild, node_radius);
+        Draw_BST(DrawRoot->rightchild, node_radius);
+    }
+}
+
+void Clear_BST(BST_NODE* BSTnode)
+{
+    if (BSTnode != NULL)
+    {
+        Clear_BST(BSTnode->leftchild);
+        Clear_BST(BSTnode->rightchild);
+        delete(BSTnode);
+    }
+}
+
+void Clear_DBST(DRAW_TREE_NODE* DBSTnode)
+{
+    if (DBSTnode != NULL)
+    {
+        Clear_DBST(DBSTnode->leftchild);
+        Clear_DBST(DBSTnode->rightchild);
+        delete(DBSTnode);
+    }
+}

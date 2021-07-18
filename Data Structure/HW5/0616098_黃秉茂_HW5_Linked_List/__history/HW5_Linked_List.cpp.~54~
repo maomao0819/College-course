@@ -1,0 +1,840 @@
+﻿//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "HW5_Linked_List.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm1 *Form1;
+
+// DECLAIR NEW DATA STRUCTURE
+// Singly linked list
+typedef struct node
+{
+	int data;
+	struct node * next;
+} NODE;
+// Doubly inked list
+typedef struct dnode
+{
+	int data;
+	struct dnode * prev;
+	struct dnode * next;
+} DNODE;
+
+// GLOBAL VARIABLE
+// Singly linked list
+NODE * first, * last;
+int count = 0;
+// Doubly inked list
+DNODE * head;
+int Dcount = 0;
+// Linked Stack
+NODE * top;
+// Linked Queue
+NODE * front, * rear;
+
+
+// PROTOTYPE DECLARATION
+// 建立新的節點p，要串在x後面
+NODE * NewNode(int element);
+void NewHeadBlankNode();
+DNODE * NewDnode(int element);
+void NewHeadBlankDnode(String str);
+void Constructure();
+// Singly linked list
+void InsertFirst(int element);
+void InsertAfter(NODE * x, int element);
+void InsertLast(int element);
+NODE * Search(int target);
+NODE * SearchBefore(int target);
+int DeleteAfter(NODE * x);
+void RandomNumberInsertLast(int n, int range);
+void ReverseList();
+void ClearList();
+void PrintList();
+// Doubly linked list
+void InsertHead(int element);
+void InsertAfterD(DNODE * x, int element);
+void InsertTail(int element);
+DNODE * SearchD(int target);
+int DeleteD(DNODE * x);
+void RandomNumberInsertTail(int n, int range);
+void ReverseDList();
+void ClearDList();
+void PrintDList();
+// Linked Stack
+void push(int element);
+int pop();
+void RandomNumberPush(int n, int range);
+void PrintStack();
+// Linked Queue
+void AddQueue(int element);
+int DeleteQueue();
+void RandomNumberAddQueue(int n, int range);
+void PrintQueue();
+
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+	: TForm(Owner)
+{
+	Constructure();
+}
+//---------------------------------------------------------------------------
+
+// Singly Linked list
+ void __fastcall TForm1::Button1_1Click(TObject *Sender)
+{
+	PrintList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1_2Click(TObject *Sender)
+{
+	int data = Edit1_1->Text.ToInt();
+	InsertFirst(data);
+	PrintList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1_3Click(TObject *Sender)
+{
+	int data = Edit1_1->Text.ToInt();
+	// 讀Edit1近來塞進first的後面
+	InsertAfter(first->next, data);
+	PrintList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1_4Click(TObject *Sender)
+{
+	int data = Edit1_1->Text.ToInt();
+	InsertLast(data);
+	PrintList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1_5Click(TObject *Sender)
+{
+	int target = Edit1_2->Text.ToInt();
+	NODE * p;
+	p = Search(target);
+	if (p)
+		Form1->Memo1->Lines->Add("The target " + IntToStr(target) + " has been found at Node " + IntToStr(count) + ".");
+	else
+		Form1->Memo1->Lines->Add("The target " + IntToStr(target) + " has NOT been found in the list.");
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1_6Click(TObject *Sender)
+{
+	int data = Edit1_1->Text.ToInt();
+	int target = Edit1_2->Text.ToInt();
+	NODE * p;
+	p = Search(target);
+	if (p)
+		InsertAfter(p, data);
+	else
+		Form1->Memo1->Lines->Add("The target " + IntToStr(target) + " has NOT been found in the list.");
+	PrintList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1_7Click(TObject *Sender)
+{
+	int data = Edit1_1->Text.ToInt();
+	int target = Edit1_2->Text.ToInt();
+	NODE * p;
+	p = SearchBefore(target);
+	if (p)
+		InsertAfter(p, data);
+	else
+		Form1->Memo1->Lines->Add("The target " + IntToStr(target) + " has NOT been found in the list.");
+	PrintList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1_8Click(TObject *Sender)
+{
+	Form1->Memo1->Lines->Add(IntToStr(first->next->data));
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1_9Click(TObject *Sender)
+{
+	Form1->Memo1->Lines->Add(IntToStr(last->data));
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1_10Click(TObject *Sender)
+{
+	int target = Edit1_2->Text.ToInt();
+	NODE * p;
+	p = SearchBefore(target);
+	if (p)
+		int data = DeleteAfter(p);
+	else
+		Form1->Memo1->Lines->Add("The target " + IntToStr(target) + " has NOT been found in the list.");
+	PrintList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1_11Click(TObject *Sender)
+{
+	int n = Edit1_3->Text.ToInt();
+	int range = Edit1_4->Text.ToInt();
+	RandomNumberInsertLast(n, range);
+	PrintList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1_12Click(TObject *Sender)
+{
+	ReverseList();
+	PrintList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1_13Click(TObject *Sender)
+{
+	ClearList();
+	PrintList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1_14Click(TObject *Sender)
+{
+	int target = Edit1_5->Text.ToInt();
+	NODE * p;
+	p = Search(target);
+	if (p)
+	{
+		int next_data = p->next->data;
+		if (p->next == first)
+			next_data = p->next->next->data;
+		Form1->Memo1->Lines->Add("The next data of the data " + IntToStr(target) + " is " + IntToStr(next_data) + ".");
+		Edit1_5->Text = next_data;
+	}
+	else
+		Form1->Memo1->Lines->Add("The data " + IntToStr(target) + " has NOT been found in the list.");
+}
+//---------------------------------------------------------------------------
+
+// Doubly Linked list
+void __fastcall TForm1::Button2_1Click(TObject *Sender)
+{
+	PrintDList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2_2Click(TObject *Sender)
+{
+	int data = Edit2_1->Text.ToInt();
+	InsertHead(data);
+	PrintDList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2_3Click(TObject *Sender)
+{
+	int data = Edit2_1->Text.ToInt();
+	// 讀Edit1近來塞進first的後面
+	InsertAfterD(head->next, data);
+	PrintDList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2_4Click(TObject *Sender)
+{
+	int data = Edit2_1->Text.ToInt();
+	InsertTail(data);
+	PrintDList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2_5Click(TObject *Sender)
+{
+	int target = Edit2_2->Text.ToInt();
+	DNODE * p;
+	p = SearchD(target);
+	if (p)
+		Form1->Memo2->Lines->Add("The target " + IntToStr(target) + " has been found at Node " + IntToStr(count) + ".");
+	else
+		Form1->Memo2->Lines->Add("The target " + IntToStr(target) + " has NOT been found in the list.");
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2_6Click(TObject *Sender)
+{
+	int data = Edit2_1->Text.ToInt();
+	int target = Edit2_2->Text.ToInt();
+	DNODE * p;
+	p = SearchD(target);
+	if (p)
+		InsertAfterD(p, data);
+	else
+		Form1->Memo2->Lines->Add("The target " + IntToStr(target) + " has NOT been found in the list.");
+	PrintDList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2_7Click(TObject *Sender)
+{
+	int data = Edit2_1->Text.ToInt();
+	int target = Edit2_2->Text.ToInt();
+	DNODE * p;
+	p = SearchD(target)->prev;
+	if (p)
+		InsertAfterD(p, data);
+	else
+		Form1->Memo2->Lines->Add("The target " + IntToStr(target) + " has NOT been found in the list.");
+	PrintDList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2_8Click(TObject *Sender)
+{
+	Form1->Memo2->Lines->Add(IntToStr(head->next->data));
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2_9Click(TObject *Sender)
+{
+	Form1->Memo2->Lines->Add(IntToStr(head->prev->data));
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2_10Click(TObject *Sender)
+{
+	int target = Edit2_2->Text.ToInt();
+	DNODE * p;
+	p = SearchD(target);
+	if (p)
+		int data = DeleteD(p);
+	else
+		Form1->Memo2->Lines->Add("The target " + IntToStr(target) + " has NOT been found in the list.");
+	PrintDList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2_11Click(TObject *Sender)
+{
+	int n = Edit2_3->Text.ToInt();
+	int range = Edit2_4->Text.ToInt();
+	RandomNumberInsertTail(n, range);
+	PrintDList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2_12Click(TObject *Sender)
+{
+	ReverseDList();
+	PrintDList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2_13Click(TObject *Sender)
+{
+	ClearDList();
+	PrintDList();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2_14Click(TObject *Sender)
+{
+	int target = Edit2_5->Text.ToInt();
+	DNODE * p;
+	p = SearchD(target);
+	if (p)
+	{
+		int prev_data = p->prev->data;
+		if (p->prev == head)
+			prev_data = p->prev->prev->data;
+		Form1->Memo2->Lines->Add("The prev data of the data " + IntToStr(target) + " is " + IntToStr(prev_data) + ".");
+		Edit2_5->Text = prev_data;
+	}
+	else
+		Form1->Memo2->Lines->Add("The data " + IntToStr(target) + " has NOT been found in the list.");
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2_15Click(TObject *Sender)
+{
+	int target = Edit2_5->Text.ToInt();
+	DNODE * p;
+	p = SearchD(target);
+	if (p)
+	{
+		int next_data = p->next->data;
+		if (p->next == head)
+			next_data = p->next->next->data;
+		Form1->Memo2->Lines->Add("The next data of the data " + IntToStr(target) + " is " + IntToStr(next_data) + ".");
+		Edit2_5->Text = next_data;
+	}
+	else
+		Form1->Memo2->Lines->Add("The data " + IntToStr(target) + " has NOT been found in the list.");
+}
+//---------------------------------------------------------------------------
+
+// Linked Stack
+void __fastcall TForm1::Button3_1Click(TObject *Sender)
+{
+	int n = Edit3_1->Text.ToInt();
+	int range = Edit3_2->Text.ToInt();
+	RandomNumberPush(n, range);
+	PrintStack();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button3_2Click(TObject *Sender)
+{
+	int data = Edit3_3->Text.ToInt();
+	push(data);
+	PrintStack();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button3_3Click(TObject *Sender)
+{
+	int result = pop();
+	if (result != -1)
+	{
+		PrintStack();
+		Form1->Label_pop_result->Caption = result;
+	}
+	else
+		Form1->Memo3->Lines->Add("Stack is EMPTY!");
+}
+//---------------------------------------------------------------------------
+
+// Linked Queue
+void __fastcall TForm1::Button4_1Click(TObject *Sender)
+{
+	int n = Edit4_1->Text.ToInt();
+	int range = Edit4_2->Text.ToInt();
+	RandomNumberAddQueue(n, range);
+	PrintQueue();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button4_2Click(TObject *Sender)
+{
+    int data = Edit4_3->Text.ToInt();
+	AddQueue(data);
+	PrintQueue();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button4_3Click(TObject *Sender)
+{
+	int result = DeleteQueue();
+	if (result != -1)
+	{
+		PrintQueue();
+		Form1->Label_delete_queue_result->Caption = result;
+	}
+	else
+		Form1->Memo4->Lines->Add("Queue is EMPTY!");
+}
+//---------------------------------------------------------------------------
+
+// FUNCTION DEFINITION
+NODE * NewNode(int element)
+{
+	NODE * p;
+	p = new NODE;
+	p->data = element;
+	p->next = NULL;
+	return p;
+}
+
+void NewHeadBlankNode(String str)
+{
+	if (str == "list")
+	{
+		first = NewNode(0);
+		first->next = first;
+		last = first;
+	}
+	else if (str == "stack")
+	{
+		top = NewNode(0);
+		top->next = top;
+	}
+	else if (str == "queue")
+	{
+		front = NewNode(0);
+		front->next = front;
+		rear = front;
+	}
+}
+
+DNODE * NewDnode(int element)
+{
+	DNODE * p;
+	p = new DNODE;
+	p->data = element;
+	p->prev = NULL;
+	p->next = NULL;
+	return p;
+}
+
+void NewHeadBlankDnode()
+{
+	head = NewDnode(0);
+	head->prev = head;
+	head->next = head;
+}
+
+// NewHeadBlankNode
+void Constructure()
+{
+	NewHeadBlankNode("list");
+	NewHeadBlankDnode();
+	NewHeadBlankNode("stack");
+	NewHeadBlankNode("queue");
+}
+
+// Singly Linked list
+void InsertFirst(int element)
+{
+	NODE * p;
+	p = NewNode(element);
+	p->next = first->next;
+	first->next = p;
+	if (last == first)
+		last = p;
+}
+
+// 建立新的節點p，要串在x後面
+void InsertAfter(NODE * x, int element)
+{
+	// 建立新的節點p
+	// p的data設成element
+	NODE * p;
+	p = NewNode(element);
+	// p的下一個為原本接在x後面的
+	p->next = x->next;
+	// x的下一變成p
+	x->next = p;
+	if (x == last)
+		last = p;
+}
+
+void InsertLast(int element)
+{
+	// 建立新的節點p
+	NODE * p;
+	// p的data設成element
+	p = NewNode(element);
+	p->next = last->next;
+	last->next = p;
+	last = p;
+}
+
+NODE * Search(int target)
+{
+	NODE * p;
+	p = first->next;
+	count = 1;
+	while ((p != first) && (p->data != target))
+	{
+		p = p->next;
+		count++;
+	}
+	if (p == first)
+		return NULL;
+	return p;
+}
+
+NODE * SearchBefore(int target)
+{
+	NODE * p, * q;
+	for (q = first, p = first->next; (p != first && p->data != target); q = p, p = p->next);
+	if (p == first)
+		return NULL;
+	return q;
+}
+
+int DeleteAfter(NODE * x)
+{
+	NODE * p;
+	p = x->next;
+	x->next = p->next;
+	int item = p->data;
+	if (p == last)
+		last = x;
+	delete [] p;
+	return item;
+}
+
+void RandomNumberInsertLast(int n, int range)
+{
+    srand(time(NULL));
+	int data = 0;
+	String line = "";
+	for (int i = 0; i < n; i++)
+	{
+		data = rand() % range + 1;
+		line += IntToStr(data) + "  ";
+		InsertLast(data);
+	}
+	Form1->Memo1->Lines->Add("Random numbers: " + line);
+}
+
+void ReverseList()
+{
+	NODE * Current, * Prev, * Next;
+	Next = first->next;
+	Current = last;
+	last = Next;
+	while (Next != first)
+	{
+		Prev = Current;
+		Current = Next;
+		Next = Next->next;
+		Current->next = Prev;
+	}
+	first->next = Current;
+	last->next = first;
+}
+
+void ClearList()
+{
+	NODE * p;
+	for (p = first->next; p != first; p = first->next)
+	{
+		first->next = p->next;
+		delete [] p;
+	}
+	last = first;
+}
+
+void PrintList()
+{
+	String line = "";
+	NODE * p;
+	for (p = first->next; p != first; p = p->next)
+		line += IntToStr(p->data) + " -> ";
+	line += "<";
+	Form1->PageControl2->TabIndex = 0;
+	Form1->Memo1->Lines->Add(line);
+}
+
+// Doubly Linked list
+void InsertHead(int element)
+{
+	DNODE * p;
+	p = NewDnode(element);
+	p->next = head->next;
+	head->next->prev = p;
+	head->next = p;
+	p->prev =head;
+}
+
+// 建立新的節點p，要串在x後面
+void InsertAfterD(DNODE * x, int element)
+{
+	// 建立新的節點p
+	// p的data設成element
+	DNODE * p;
+	p = NewDnode(element);
+	// p的下一個為原本接在x後面的
+	p->next = x->next;
+	x->next->prev = p;
+	// x的下一變成p
+	x->next = p;
+	p->prev = x;
+}
+
+void InsertTail(int element)
+{
+	// 建立新的節點p
+	DNODE * p;
+	// p的data設成element
+	p = NewDnode(element);
+	p->next = head->prev->next;
+	head->prev->next->prev = p;
+	head->prev->next = p;
+	p->prev = head->prev;
+}
+
+DNODE * SearchD(int target)
+{
+	DNODE * p;
+	p = head->next;
+	Dcount = 1;
+	while ((p != head) && (p->data != target))
+	{
+		p = p->next;
+		Dcount++;
+	}
+	if (p == head)
+		return NULL;
+	return p;
+}
+
+int DeleteD(DNODE * x)
+{
+	if (x == head)
+	{
+		Form1->Memo2->Lines->Add("Can't delete empty list!");
+        return -1;
+	}
+	else
+	{
+		x->prev->next = x->next;
+		x->next->prev = x->prev;
+		int item = x->data;
+		delete [] x;
+		return item;
+	}
+
+}
+
+void RandomNumberInsertTail(int n, int range)
+{
+	srand(time(NULL));
+	int data = 0;
+	String line = "";
+	for (int i = 0; i < n; i++)
+	{
+		data = rand() % range + 1;
+		line += IntToStr(data) + "  ";
+		InsertTail(data);
+	}
+	Form1->Memo2->Lines->Add("Random numbers: " + line);
+}
+
+void ReverseDList()
+{
+	DNODE * Current, * Prev, * Next;
+	Next = head->next;
+	Current = head->prev;
+	DNODE * tail = Next;
+	while (Next != head)
+	{
+		Prev = Current;
+		Current = Next;
+		Next = Next->next;
+		Current->next = Prev;
+		Prev->prev = Current;
+	}
+	head->next = Current;
+	Current->prev = head;
+	tail->next = head;
+	head->prev = tail;
+}
+
+void ClearDList()
+{
+	DNODE * p;
+	for (p = head->next; p != head; p = head->next)
+	{
+		head->next = p->next;
+		delete [] p;
+	}
+	head->prev = head;
+}
+
+void PrintDList()
+{
+	String line = "";
+	DNODE * p;
+	for (p = head->next; p != head; p = p->next)
+		line += IntToStr(p->data) + " -> ";
+	line += "<";
+	Form1->PageControl2->TabIndex = 1;
+	Form1->Memo2->Lines->Add(line);
+}
+
+// Linked Stack
+void push(int element)
+{
+	NODE * p = NewNode(element);
+	p->next = top->next;
+	top->next = p;
+}
+
+int pop()
+{
+	NODE * p = top->next;
+	if (p == top)
+		return -1;
+	int result = p->data;
+	top->next = p->next;
+	delete [] p;
+	return result;
+}
+
+void RandomNumberPush(int n, int range)
+{
+	srand(time(NULL));
+	int data = 0;
+	String line = "";
+	for (int i = 0; i < n; i++)
+	{
+		data = rand() % range + 1;
+		line += IntToStr(data) + "  ";
+		push(data);
+	}
+	Form1->Memo3->Lines->Add("Random numbers: " + line);
+}
+
+void PrintStack()
+{
+	String line = "";
+	NODE * p;
+	for (p = top->next; p != top; p = p->next)
+		line += IntToStr(p->data) + " -> ";
+	line += "<";
+	Form1->PageControl2->TabIndex = 2;
+	Form1->Memo3->Lines->Add(line);
+}
+
+// Linked Queue
+void AddQueue(int element)
+{
+	NODE * p = NewNode(element);
+	p->next = rear->next;
+	rear->next = p;
+	rear = p;
+}
+
+int DeleteQueue()
+{
+	NODE * p = front->next;
+	if (p == front)
+		return -1;
+	int result = p->data;
+	front->next = p->next;
+	delete [] p;
+	return result;
+}
+
+void RandomNumberAddQueue(int n, int range)
+{
+	srand(time(NULL));
+	int data = 0;
+	String line = "";
+	for (int i = 0; i < n; i++)
+	{
+		data = rand() % range + 1;
+		line += IntToStr(data) + "  ";
+		AddQueue(data);
+	}
+	Form1->Memo4->Lines->Add("Random numbers: " + line);
+}
+
+void PrintQueue()
+{
+	String line = "";
+	NODE * p;
+	for (p = front->next; p != front; p = p->next)
+		line += IntToStr(p->data) + " -> ";
+	line += "<";
+	Form1->PageControl2->TabIndex = 3;
+	Form1->Memo4->Lines->Add(line);
+}

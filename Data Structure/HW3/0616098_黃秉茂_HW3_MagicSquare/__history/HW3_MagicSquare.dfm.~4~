@@ -1,0 +1,126 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 556
+  ClientWidth = 776
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Splitter1: TSplitter
+    Left = 0
+    Top = 113
+    Width = 776
+    Height = 3
+    Cursor = crVSplit
+    Align = alTop
+    ExplicitTop = 41
+    ExplicitWidth = 515
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 776
+    Height = 113
+    Align = alTop
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 216
+      Top = 48
+      Width = 20
+      Height = 13
+      Caption = 'n = '
+    end
+    object Button1: TButton
+      Left = 392
+      Top = 35
+      Width = 145
+      Height = 42
+      Caption = 'Magic Square'
+      TabOrder = 0
+      OnClick = Button1Click
+    end
+    object Edit1: TEdit
+      Left = 242
+      Top = 45
+      Width = 99
+      Height = 21
+      TabOrder = 1
+      Text = '3'
+    end
+    object CheckBox1: TCheckBox
+      Left = 216
+      Top = 72
+      Width = 97
+      Height = 17
+      Caption = 'Check'
+      Checked = True
+      State = cbChecked
+      TabOrder = 2
+    end
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Top = 116
+    Width = 776
+    Height = 440
+    ActivePage = TabSheet1
+    Align = alClient
+    TabOrder = 1
+    object TabSheet1: TTabSheet
+      Caption = 'TabSheet1'
+      ExplicitHeight = 444
+      object Memo1: TMemo
+        Left = 0
+        Top = 0
+        Width = 768
+        Height = 412
+        Align = alClient
+        Lines.Strings = (
+          'Memo1')
+        ScrollBars = ssVertical
+        TabOrder = 0
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'TabSheet2'
+      ImageIndex = 1
+      ExplicitHeight = 444
+      object Memo2: TMemo
+        Left = 0
+        Top = 0
+        Width = 768
+        Height = 412
+        Align = alClient
+        Lines.Strings = (
+          'Memo2')
+        TabOrder = 0
+        ExplicitLeft = 424
+        ExplicitTop = 323
+        ExplicitWidth = 185
+        ExplicitHeight = 89
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'TabSheet3'
+      ImageIndex = 2
+      object StringGrid1: TStringGrid
+        Left = 0
+        Top = 0
+        Width = 768
+        Height = 412
+        Align = alClient
+        TabOrder = 0
+        ExplicitTop = 116
+        ExplicitWidth = 776
+        ExplicitHeight = 440
+      end
+    end
+  end
+end

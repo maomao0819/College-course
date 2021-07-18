@@ -1,0 +1,30 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "HW1_sorting.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+
+int data [1000];
+
+TForm1 *Form1;
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+	int n = StrToInt(Edit1->Text);
+	int i;
+	for (i = 0; i < n; i++) 
+	{
+		data[i] = rand();
+		Form1->Memo1->Lines->Add(data[i]);	
+	}
+}
+//---------------------------------------------------------------------------

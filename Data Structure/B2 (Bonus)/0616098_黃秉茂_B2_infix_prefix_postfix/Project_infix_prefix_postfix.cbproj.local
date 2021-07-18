@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020/11/15 18:56:46.000.314,=D:\programming\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2020/11/15 18:56:46.000.436,=D:\programming\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2020/11/15 19:31:38.000.993,D:\programming\Embarcadero\Studio\Projects\Unit1.h=D:\programming\Embarcadero\Studio\Projects\B2 (Bonus)\0616098_黃秉茂_B2_infix_prefix_postfix\B2_infix_prefix_postfix.h</Transaction>
+    <Transaction>2020/11/15 19:31:38.000.993,D:\programming\Embarcadero\Studio\Projects\Unit1.dfm=D:\programming\Embarcadero\Studio\Projects\B2 (Bonus)\0616098_黃秉茂_B2_infix_prefix_postfix\B2_infix_prefix_postfix.dfm</Transaction>
+    <Transaction>2020/11/15 19:31:38.000.993,D:\programming\Embarcadero\Studio\Projects\Unit1.cpp=D:\programming\Embarcadero\Studio\Projects\B2 (Bonus)\0616098_黃秉茂_B2_infix_prefix_postfix\B2_infix_prefix_postfix.cpp</Transaction>
+    <Transaction>2020/11/15 19:31:52.000.007,D:\programming\Embarcadero\Studio\Projects\Project1PCH1.h=D:\programming\Embarcadero\Studio\Projects\B2 (Bonus)\0616098_黃秉茂_B2_infix_prefix_postfix\Project_B2_infix_prefix_postfix.h</Transaction>
+    <Transaction>2020/11/15 19:32:00.000.435,D:\programming\Embarcadero\Studio\Projects\Project1.cbproj=D:\programming\Embarcadero\Studio\Projects\B2 (Bonus)\0616098_黃秉茂_B2_infix_prefix_postfix\Project_infix_prefix_postfix.cbproj</Transaction>
+  </Transactions>
+</BorlandProject>

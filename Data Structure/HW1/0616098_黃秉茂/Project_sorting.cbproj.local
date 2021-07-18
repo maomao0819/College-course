@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020/09/23 14:38:46.000.455,=D:\programming\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2020/09/23 14:38:47.000.049,=D:\programming\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2020/09/23 14:40:55.000.672,D:\programming\Embarcadero\Studio\Projects\Unit1.h=D:\programming\Embarcadero\Studio\Projects\HW1_sorting\HW1_sorting.h</Transaction>
+    <Transaction>2020/09/23 14:40:55.000.672,D:\programming\Embarcadero\Studio\Projects\Unit1.cpp=D:\programming\Embarcadero\Studio\Projects\HW1_sorting\HW1_sorting.cpp</Transaction>
+    <Transaction>2020/09/23 14:40:55.000.672,D:\programming\Embarcadero\Studio\Projects\Unit1.dfm=D:\programming\Embarcadero\Studio\Projects\HW1_sorting\HW1_sorting.dfm</Transaction>
+    <Transaction>2020/09/23 14:41:07.000.047,D:\programming\Embarcadero\Studio\Projects\Project1PCH1.h=D:\programming\Embarcadero\Studio\Projects\HW1_sorting\Project_HW1_sorting.h</Transaction>
+    <Transaction>2020/09/23 14:41:09.000.930,D:\programming\Embarcadero\Studio\Projects\Project1.cbproj=D:\programming\Embarcadero\Studio\Projects\HW1_sorting\Project1.cbproj</Transaction>
+    <Transaction>2020/09/23 21:13:45.000.806,D:\programming\Embarcadero\Studio\Projects\HW1_sorting\HW1_sorting.h=D:\programming\Embarcadero\Studio\Projects\0616098_HW1_sorting\HW1_sorting.h</Transaction>
+    <Transaction>2020/09/23 21:13:45.000.806,D:\programming\Embarcadero\Studio\Projects\HW1_sorting\HW1_sorting.cpp=D:\programming\Embarcadero\Studio\Projects\0616098_HW1_sorting\HW1_sorting.cpp</Transaction>
+    <Transaction>2020/09/23 21:13:45.000.806,D:\programming\Embarcadero\Studio\Projects\HW1_sorting\HW1_sorting.dfm=D:\programming\Embarcadero\Studio\Projects\0616098_HW1_sorting\HW1_sorting.dfm</Transaction>
+    <Transaction>2020/09/23 21:21:22.000.353,D:\programming\Embarcadero\Studio\Projects\0616098_HW1_sorting\HW1_sorting.cpp=D:\programming\Embarcadero\Studio\Projects\0616098_黃秉茂_HW1_sorting\HW1_sorting.cpp</Transaction>
+    <Transaction>2020/09/23 21:21:22.000.353,D:\programming\Embarcadero\Studio\Projects\0616098_HW1_sorting\HW1_sorting.h=D:\programming\Embarcadero\Studio\Projects\0616098_黃秉茂_HW1_sorting\HW1_sorting.h</Transaction>
+    <Transaction>2020/09/23 21:21:22.000.353,D:\programming\Embarcadero\Studio\Projects\0616098_HW1_sorting\HW1_sorting.dfm=D:\programming\Embarcadero\Studio\Projects\0616098_黃秉茂_HW1_sorting\HW1_sorting.dfm</Transaction>
+    <Transaction>2020/09/23 21:39:29.000.745,D:\programming\Embarcadero\Studio\Projects\HW1_sorting\Project1.cbproj=D:\programming\Embarcadero\Studio\Projects\0616098_黃秉茂_HW1_sorting\Project1.cbproj</Transaction>
+    <Transaction>2020/09/23 21:59:34.000.394,D:\programming\Embarcadero\Studio\Projects\0616098_黃秉茂_HW1_sorting\Project1.cbproj=D:\programming\Embarcadero\Studio\Projects\0616098_黃秉茂_HW1_sorting\Project.cbproj</Transaction>
+    <Transaction>2020/09/23 22:00:12.000.148,D:\programming\Embarcadero\Studio\Projects\0616098_黃秉茂_HW1_sorting\Project.cbproj=D:\programming\Embarcadero\Studio\Projects\0616098_黃秉茂_HW1_sorting\Project_sorting.cbproj</Transaction>
+  </Transactions>
+</BorlandProject>
