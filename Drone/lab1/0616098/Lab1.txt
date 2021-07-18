@@ -1,0 +1,6 @@
+P7 scalar：初始值
+	
+
+OPENCV
+	MAT "="：類似指標
+	
