@@ -1,0 +1,38 @@
+公司代碼          14020 non-null object
+年月日           14020 non-null object
+成份股           67 non-null object
+開盤價(元)        14020 non-null object
+最高價(元)        14020 non-null object
+最低價(元)        14020 non-null object
+收盤價(元)        14020 non-null object
+成交量(千股)       14020 non-null object
+成交值(千元)       14020 non-null object
+當日均價(元)       14012 non-null object
+5日均價(元)       14020 non-null object
+10日均價(元)      14020 non-null object
+20日均價(元)      14020 non-null object
+報酬率％          14020 non-null float64
+日報酬率 %        14020 non-null float64
+流通在外股數(千股)    14020 non-null object
+市值(百萬元)       14020 non-null object
+本益比-TEJ       11216 non-null float64
+股價淨值比-TEJ     11216 non-null float64
+現金股利率         14020 non-null float64
+股價漲跌(元)       14020 non-null float64
+高低價差%         13508 non-null float64
+指數因子          0 non-null float64
+累計營收(千元)      544 non-null object
+單月營收與上月比％     544 non-null float64
+單月營收成長率％      544 non-null float64
+單月營收(千元)      544 non-null object
+配股(Y/N)       68 non-null object
+息值(元)         67 non-null float64
+0056 元大高股息
+2330 台積電
+3008 大立光
+2454 聯發科
+2317 鴻海
+2884 玉山金
+2881 富邦金
+2882 國泰金
+2885 元大金

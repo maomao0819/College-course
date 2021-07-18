@@ -1,0 +1,115 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dD:/lab1_ALU
+valu
+Z0 !s110 1555231226
+!i10b 1
+!s100 Vnk@Q]Xd:Q9C6^fzS03mY3
+IKk`VczFHaMO<HOjXgPb^91
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+Z2 dC:/Users/james/Desktop/0616098
+w1555226661
+8C:/Users/james/Desktop/0616098/CO_LAB1/alu.v
+FC:/Users/james/Desktop/0616098/CO_LAB1/alu.v
+Z3 L0 24
+Z4 OP;L;10.4a;61
+r1
+!s85 0
+31
+Z5 !s108 1555231226.000000
+!s107 C:/Users/james/Desktop/0616098/CO_LAB1/alu.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/james/Desktop/0616098/CO_LAB1/alu.v|
+!s101 -O0
+!i113 1
+Z6 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
+valu_bottom
+R0
+!i10b 1
+!s100 `E4[?D64]h_;^@A4VJfdI0
+IjhU@4kIHji=mjcLSFcf^12
+R1
+R2
+w1555193400
+8C:/Users/james/Desktop/0616098/CO_LAB1/alu_bottom.v
+FC:/Users/james/Desktop/0616098/CO_LAB1/alu_bottom.v
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Users/james/Desktop/0616098/CO_LAB1/alu_bottom.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/james/Desktop/0616098/CO_LAB1/alu_bottom.v|
+!s101 -O0
+!i113 1
+R6
+valu_top
+R0
+!i10b 1
+!s100 UB>049b[i>3PbL7Ho:@:=1
+ID<n@bHB1_SZ`mF[fROd5o1
+R1
+R2
+w1555219375
+8C:/Users/james/Desktop/0616098/CO_LAB1/alu_top.v
+FC:/Users/james/Desktop/0616098/CO_LAB1/alu_top.v
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Users/james/Desktop/0616098/CO_LAB1/alu_top.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/james/Desktop/0616098/CO_LAB1/alu_top.v|
+!s101 -O0
+!i113 1
+R6
+vtestbench
+R0
+!i10b 1
+!s100 BAfCY6]e`?`>Y^7fc2:Y[0
+I3BC8IYN7M3OIY?LXQA1:B1
+R1
+R2
+w1555231216
+8C:\Users\james\Desktop\0616098\CO_LAB1\testbench.v
+FC:\Users\james\Desktop\0616098\CO_LAB1\testbench.v
+L0 26
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:\Users\james\Desktop\0616098\CO_LAB1\testbench.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:\Users\james\Desktop\0616098\CO_LAB1\testbench.v|
+!s101 -O0
+!i113 1
+R6
+vtestbench1
+R0
+!i10b 1
+!s100 dLG=4fl`0@8[C_EHhb[5Z2
+Ik^B>FMTiA;6WlBo7YgBlF0
+R1
+R2
+w1555180387
+8C:/Users/james/Desktop/0616098/CO_LAB1/testbench1.v
+FC:/Users/james/Desktop/0616098/CO_LAB1/testbench1.v
+L0 25
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Users/james/Desktop/0616098/CO_LAB1/testbench1.v|
+!s90 -reportprogress|300|-work|work|-stats=none|C:/Users/james/Desktop/0616098/CO_LAB1/testbench1.v|
+!s101 -O0
+!i113 1
+R6

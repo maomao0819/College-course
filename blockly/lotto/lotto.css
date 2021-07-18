@@ -1,0 +1,15 @@
+#container {
+	display:flex;
+	flex-direction:row-reverse;
+}
+#lotto, #blocklyDiv {
+	height:480px;
+	width:80%
+}
+#lotto {
+	border:solid 10px grey;
+	border-radius: 20px;
+	text-align:center;
+}		
+
+

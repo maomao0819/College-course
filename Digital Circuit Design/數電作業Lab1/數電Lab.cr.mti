@@ -1,0 +1,106 @@
+C:/Users/??/Downloads/t_Simple_Circuit_prop_delay.v {1 {vlog -work work -stats=none C:/Users/??/Downloads/t_Simple_Circuit_prop_delay.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module t_Simple_Circuit_prop_delay
+
+Top level modules:
+	t_Simple_Circuit_prop_delay
+
+} {} {}} C:/Users/??/Downloads/Lab0/t_Simple_Circuit.v {1 {vlog -work work -stats=none C:/Users/??/Downloads/Lab0/t_Simple_Circuit.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module t_Simple_Circuit
+
+Top level modules:
+	t_Simple_Circuit
+
+} {} {}} C:/Users/??/Downloads/Simple_Circuit_prop_delay.v {1 {vlog -work work -stats=none C:/Users/??/Downloads/Simple_Circuit_prop_delay.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Simple_Circuit_prop_delay
+
+Top level modules:
+	Simple_Circuit_prop_delay
+
+} {} {}} D:/examples/t_Lab1_dataflow.v {1 {vlog -work work -stats=none D:/examples/t_Lab1_dataflow.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module t_Lab1_dataflow
+
+Top level modules:
+	t_Lab1_dataflow
+
+} {} {}} C:/Users/??/Downloads/Simple_Circuit_prop_delay.v {1 {vlog -work work -stats=none C:/Users/??/Downloads/Simple_Circuit_prop_delay.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Simple_Circuit_prop_delay
+
+Top level modules:
+	Simple_Circuit_prop_delay
+
+} {} {}} D:/examples/Lab1_gatelevel.v {1 {vlog -work work -stats=none D:/examples/Lab1_gatelevel.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Lab1_gatelevel
+
+Top level modules:
+	Lab1_gatelevel
+
+} {} {}} D:/examples/Lab1_UDP.v {1 {vlog -work work -stats=none D:/examples/Lab1_UDP.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling UDP Lab1_UDP
+
+Top level modules:
+	--none--
+
+} {} {}} D:/examples/Lab1_gatelevel_UDP.v {1 {vlog -work work -stats=none D:/examples/Lab1_gatelevel_UDP.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Lab1_gatelevel_UDP
+
+Top level modules:
+	Lab1_gatelevel_UDP
+
+} {} {}} D:/examples/Lab1_dataflow.v {1 {vlog -work work -stats=none D:/examples/Lab1_dataflow.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Lab1_gatelevel
+
+Top level modules:
+	Lab1_gatelevel
+
+} {} {}} C:/Users/??/Downloads/Lab0/Simple_Circuit.v {1 {vlog -work work -stats=none C:/Users/??/Downloads/Lab0/Simple_Circuit.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Simple_Circuit
+
+Top level modules:
+	Simple_Circuit
+
+} {} {}} D:/examples/t_Lab1_gatelevel_UDP.v {1 {vlog -work work -stats=none D:/examples/t_Lab1_gatelevel_UDP.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module t_Lab1_gatelevel_UDP
+
+Top level modules:
+	t_Lab1_gatelevel_UDP
+
+} {} {}} D:/examples/t_Lab1_gatelevel.v {1 {vlog -work work -stats=none D:/examples/t_Lab1_gatelevel.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module t_Lab1_gatelevel
+
+Top level modules:
+	t_Lab1_gatelevel
+
+} {} {}} C:/Users/??/Downloads/Lab0/Simple_Circuit.v {1 {vlog -work work -stats=none C:/Users/??/Downloads/Lab0/Simple_Circuit.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Simple_Circuit
+
+Top level modules:
+	Simple_Circuit
+
+} {} {}} C:/Users/??/Downloads/t_Simple_Circuit_prop_delay.v {1 {vlog -work work -stats=none C:/Users/??/Downloads/t_Simple_Circuit_prop_delay.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module t_Simple_Circuit_prop_delay
+
+Top level modules:
+	t_Simple_Circuit_prop_delay
+
+} {} {}} C:/Users/??/Downloads/Lab0/t_Simple_Circuit.v {1 {vlog -work work -stats=none C:/Users/??/Downloads/Lab0/t_Simple_Circuit.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module t_Simple_Circuit
+
+Top level modules:
+	t_Simple_Circuit
+
+} {} {}}

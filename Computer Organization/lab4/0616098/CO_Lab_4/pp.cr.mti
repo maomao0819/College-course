@@ -1,0 +1,99 @@
+D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Pipe_CPU_1.v {1 {vlog -work work -stats=none D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Pipe_CPU_1.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Pipe_CPU_1
+
+Top level modules:
+	Pipe_CPU_1
+
+} {} {}} D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Reg_File.v {1 {vlog -work work -stats=none D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Reg_File.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Reg_File
+
+Top level modules:
+	Reg_File
+
+} {} {}} D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Shift_Left_Two_32.v {1 {vlog -work work -stats=none D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Shift_Left_Two_32.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Shift_Left_Two_32
+
+Top level modules:
+	Shift_Left_Two_32
+
+} {} {}} D:/testforModelsim/0616098/CO_Lab_4/lab4_code/TestBench.v {1 {vlog -work work -stats=none D:/testforModelsim/0616098/CO_Lab_4/lab4_code/TestBench.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module TestBench
+
+Top level modules:
+	TestBench
+
+} {} {}} D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Sign_Extend.v {1 {vlog -work work -stats=none D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Sign_Extend.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Sign_Extend
+
+Top level modules:
+	Sign_Extend
+
+} {} {}} D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Adder.v {1 {vlog -work work -stats=none D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Adder.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Adder
+
+Top level modules:
+	Adder
+
+} {} {}} D:/testforModelsim/0616098/CO_Lab_4/lab4_code/ProgramCounter.v {1 {vlog -work work -stats=none D:/testforModelsim/0616098/CO_Lab_4/lab4_code/ProgramCounter.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ProgramCounter
+
+Top level modules:
+	ProgramCounter
+
+} {} {}} D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Instruction_Memory.v {1 {vlog -work work -stats=none D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Instruction_Memory.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Instruction_Memory
+
+Top level modules:
+	Instruction_Memory
+
+} {} {}} D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Pipe_Reg.v {1 {vlog -work work -stats=none D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Pipe_Reg.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Pipe_Reg
+
+Top level modules:
+	Pipe_Reg
+
+} {} {}} D:/testforModelsim/0616098/CO_Lab_4/lab4_code/ALU_Ctrl.v {1 {vlog -work work -stats=none D:/testforModelsim/0616098/CO_Lab_4/lab4_code/ALU_Ctrl.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ALU_Ctrl
+
+Top level modules:
+	ALU_Ctrl
+
+} {} {}} D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Decoder.v {1 {vlog -work work -stats=none D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Decoder.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Decoder
+
+Top level modules:
+	Decoder
+
+} {} {}} D:/testforModelsim/0616098/CO_Lab_4/lab4_code/MUX_2to1.v {1 {vlog -work work -stats=none D:/testforModelsim/0616098/CO_Lab_4/lab4_code/MUX_2to1.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module MUX_2to1
+
+Top level modules:
+	MUX_2to1
+
+} {} {}} D:/testforModelsim/0616098/CO_Lab_4/lab4_code/ALU.v {1 {vlog -work work -stats=none D:/testforModelsim/0616098/CO_Lab_4/lab4_code/ALU.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ALU
+
+Top level modules:
+	ALU
+
+} {} {}} D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Data_Memory.v {1 {vlog -work work -stats=none D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Data_Memory.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Data_Memory
+
+Top level modules:
+	Data_Memory
+
+} {} {}}

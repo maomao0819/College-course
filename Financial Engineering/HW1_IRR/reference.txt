@@ -1,0 +1,1 @@
+https://github.com/jasminehung/Financial_Engineering/blob/master/Internal%20rate%20of%20return%20(by%20bisection%20and%20newton%20method).cpp

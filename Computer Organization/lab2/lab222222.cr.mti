@@ -1,0 +1,6 @@
+{D:/Lab2_half_sub_ gate_level.v} {0 {vlog -work lab2 -stats=none {D:/Lab2_half_sub_ gate_level.v}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+** Error: (vlog-13069) D:/Lab2_half_sub_ gate_level.v(1): near "gate_level": syntax error, unexpected IDENTIFIER, expecting import or ';' or '#' or '('.
+
+
+} {3.0 4.0} {}}

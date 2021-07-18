@@ -1,0 +1,94 @@
+//0616098
+`timescale 1ns/1ps
+
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date:    10:58:01 10/10/2013
+// Design Name: 
+// Module Name:    alu_top 
+// Project Name: 
+// Target Devices: 
+// Tool versions: 
+// Description: 
+//
+// Dependencies: 
+//
+// Revision: 
+// Revision 0.01 - File Created
+// Additional Comments: 
+//
+//////////////////////////////////////////////////////////////////////////////////
+
+module alu_bottom(
+               src1,       //1 bit source 1 (input)
+               src2,       //1 bit source 2 (input)
+               less,       //1 bit less     (input)
+               equal,      //1 bit equal    (input)
+               A_invert,   //1 bit A_invert (input)
+               B_invert,   //1 bit B_invert (input)
+               cin,        //1 bit carry in (input)
+               operation,  //operation      (input)
+               compareSel, //3 bits select  (input)
+               result,     //1 bit result   (output)
+               cout,     //1 bit carry out(output)
+               set,        //1 bit Set (MSB)(output)
+               overflow    //1 bit overflow (output)
+               );
+
+input         src1;
+input         src2;
+input         less;
+input         equal;
+input         A_invert;
+input         B_invert;
+input         cin;
+input [2-1:0] operation;
+input [3-1:0] compareSel;
+
+output        result;
+output        cout;
+output reg    set;
+output        overflow;
+
+reg           result;
+
+wire A, B, sum;
+assign A = src1 ^ A_invert;   //complement
+assign B = src2 ^ B_invert;   //complement
+assign cout = (operation == 2'd2) ? (A & B) | ((A | B) & cin) : 2'd0;
+assign sum = A ^ B ^ cin;
+assign overflow = sum ^ ~cout;  
+
+always@( * )
+begin
+    case(operation)
+        2'd0:       //AND
+            result = A & B;
+        2'd1:       //OR
+            result = A | B;
+        2'd2:       //ADD
+            result = A ^ B ^ cin;
+        2'd3:       //SLT
+        begin
+            result = less;
+            case(compareSel)
+                3'b000:     //less than
+                    set = sum;
+                3'b001:     //greater than
+                    set = !sum && !equal;
+                3'b010:     //less equal
+                    set = sum || equal;
+                3'b011:     //greater equal
+                    set = !sum;
+                3'b110:     //equal
+                    set = equal;
+                3'b100:     //not equal
+                    set = !equal;
+            endcase
+        end
+    endcase
+end
+
+endmodule

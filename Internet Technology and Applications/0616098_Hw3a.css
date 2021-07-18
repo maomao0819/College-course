@@ -1,0 +1,14 @@
+#container {
+	display:flex;
+	flex-direction:row-reverse;
+}
+#styleee {
+	body {background-color:blue;}
+			h3 {color:red;}
+			table {border: 1px solid black;} 
+			tr, td, th {
+				border: 1px solid black;
+				text-align: left;
+            }
+}
+			

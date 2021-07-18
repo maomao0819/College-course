@@ -1,0 +1,7 @@
+# Reading C:/tcl/vsim/pref.tcl
+# error: Layout::Clairvoyance can't read "map(²)": no such element in array
+# can't read "map(²)": no such element in array
+#     while executing
+# "Layout::Clairvoyance"
+# OpenFile D:/²/\m/xMûï-/xû\mLab3/Lab3_0616098_ÃÉ/JK_ff_AR.v
+e_D_FF_gatelevel.v

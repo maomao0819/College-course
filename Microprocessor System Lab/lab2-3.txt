@@ -1,0 +1,505 @@
+org   0 
+mov  SP, #50H
+       mov  P3, #0
+       ;call delay
+       mov  P0, #0FFH
+       mov  P2, #0FFH
+       mov  P3, #5H
+       mov  P3, #0
+
+
+start:
+       mov  R6, #250
+green_2:
+       mov  P3, #0
+       mov  P0, #0H
+       mov  A, #1H
+       mov  P3, A       
+       call   delay2       ; col1 done
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P0, #7aH
+       add  A, #10H
+       mov  P3, A      ; A:= ???    
+       call   delay2      ; col2 done
+       
+       mov  R7, #4
+g2_loop:
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P0, #4AH
+       add  A, #10H
+       mov  P3, A      ; A:= ???
+       call   delay2      ; col3-6 done in sequence
+       djnz  R7, g2_loop
+
+       anl  P3, #0F0H   ; ==XXX==
+       mov  P0, #4EH
+       add  A, #10H
+       mov  P3, A
+       call   delay2      ; col7 done
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P0, #0H
+       add   A, #10H    ; A:= ???
+       mov  P3, A
+       call   delay2       ; col8 done
+       djnz  R6, green_2
+   
+       anl   P3, #0F0H   ; ==AA==
+       mov  P0, #0FFH   ; ==AA==
+       mov  P3, A       ; ==AA==
+       call   delay2
+
+redd:
+       mov  R6, #250
+red_2:
+       mov  P3, #0
+       mov  P2, #0H
+       mov  A, #4H
+       mov  P3, A
+       call  delay2      ; col1 done
+       anl  P3, #0F0H   ; ==XXX==
+       mov  P2, #7AH
+       add  A, #10H   ; A:= ???
+       mov  P3, A
+       call  delay2       ; col2 done
+
+       mov  R7, #4
+r2_loop:
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P2, #4AH
+       add  A, #10H     ; A:= ???
+       mov  P3, A
+       call  delay2        ; col3-6 done
+       djnz  R7, r2_loop
+
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P2, #4EH
+       add  A, #10H     ; A:= ???
+       mov  P3, A
+       call   delay2       ; col7 done
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P2, #0H
+       add  A, #10H      ; A:= ???
+       mov  P3, A
+       call   delay2        ; col8 done
+       djnz  R6, red_2
+
+       anl  P3, #0F0H    ; ==BB==
+       mov  P2, #0FFH   ; ==BB==
+       mov  P3, A       ; ==BB==
+       call  delay2
+
+       mov  R6, #250
+yellow_2:
+       mov  P0, #0H
+       mov  P2, #0H
+       mov  A, #5H
+       mov  P3, A
+       call  delay2        ; col1 done
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P0, #7AH
+       mov  P2, #7AH
+       add  A, #10H     ; A:= ???
+       mov  P3, A
+       call   delay2       ; col2 done
+
+       mov  R7, #4
+y2_loop:
+       anl  P3, #0F0H   ; ==XXX==
+       mov  P0, #4AH
+       mov  P2, #4AH
+       add  A, #10H      ; A:= ???
+       mov  P3, A
+       call  delay2         ; col3-6 done
+       djnz  R7, y2_loop
+
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P0, #4EH 
+       mov  P2, #4EH 
+       add  A, #10H      ; A:= ???
+       mov  P3, A
+       call  delay2        ; col7 done
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P0, #0H
+       mov  P2, #0H
+       add  A, #10H     ; A:= ???
+       mov  P3, A
+       call  delay2        ; col8 done
+       djnz  R6, yellow_2
+       anl   P3, #0F0H     ; ==CC==
+       mov  P0, #0FFH     ; ==CC==
+       mov  P2, #0FFH     ; ==CC==
+       mov  P3, A         ; ==CC==
+       call  delay2
+
+		
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame0:
+		mov P0, #0FEH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #00H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame0g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame0g
+		djnz r6, frame0
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame1:
+		mov P0, #0FDH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #10H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame1g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame1g
+		djnz r6, frame1
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame2:
+		mov P0, #0FBH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #20H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame2g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame2g
+		djnz r6, frame2
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame3:
+		mov P0, #0F7H		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #30H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame3g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame3g
+		djnz r6, frame3
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame4:
+		mov P0, #0EFH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #40H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame4g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame4g
+		djnz r6, frame4
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame5:
+		mov P0, #0DFH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #50H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame5g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame5g
+		djnz r6, frame5
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame6:
+		mov P0, #0BFH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #60H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame6g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame6g
+		djnz r6, frame6
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame7:
+		mov P0, #07FH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #70H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame7g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame7g
+		djnz r6, frame7
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame8:
+		mov P0, #0BFH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #60H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame8g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame8g
+		djnz r6, frame8
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame9:
+		mov P0, #0DFH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #50H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame9g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame9g
+		djnz r6, frame9
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame10:
+		mov P0, #0EFH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #40H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame10g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame10g
+		djnz r6, frame10
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame11:
+		mov P0, #0F7H		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #30H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame11g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame11g
+		djnz r6, frame11
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame12:
+		mov P0, #0FBH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #20H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame12g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame12g
+		djnz r6, frame12
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame13:
+		mov P0, #0FDH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #10H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame13g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame13g
+		djnz r6, frame13
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+
+jmp start
+		
+delay:  push  2
+       push  3
+       mov  R2, #2
+dd:   mov  R3, #64
+       djnz  R3, $
+       djnz  R2, dd
+       pop  3
+       pop  2
+       ret
+       
+
+delay1:  push  2
+       push  3
+      mov  R2, #20
+dd12:   mov  R3, #250
+       djnz  R3, $
+       djnz  R2, dd12
+       pop  3
+       pop  2
+       ret
+
+delay2:  push  2
+       push  3
+       mov  R2, #2
+dd3:   mov  R3, #250
+       djnz  R3, $
+       djnz  R2, dd3
+       pop  3
+       pop  2
+       ret
+
+end

@@ -1,0 +1,27 @@
+div {margin:0; padding:0;}
+#container {
+	display:flex;
+	pointer-events: auto!important;
+	flex-direction:row;
+}
+#rabbit, #blocklyDiv {
+	height:480px;
+	width:80%
+}
+#rabbit {
+	border:solid 10px grey;
+	border-radius: 20px;
+	text-align:center;
+	width:70%;
+	
+}		
+#rabbitCanvas {
+	color: white;
+	font-size: 2em;
+	width: 80%;
+	border:white 3px solid;
+	border-radius: 12px 12px;
+	margin: auto;
+	text-align: center;
+}	
+

@@ -1,0 +1,98 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/examples
+vLab1_gatelevel
+Z1 !s110 1524650856
+!i10b 1
+!s100 7UMgHhiQZ2PU6S72TPXVc3
+ILc_YmjOI^[fUz9MFG4liX3
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1524565486
+8D:/examples/Lab1_gatelevel.v
+FD:/examples/Lab1_gatelevel.v
+L0 1
+Z3 OP;L;10.4a;61
+r1
+!s85 0
+31
+Z4 !s108 1524650856.000000
+!s107 D:/examples/Lab1_gatelevel.v|
+!s90 -reportprogress|300|-work|123|-stats=none|D:/examples/Lab1_gatelevel.v|
+!s101 -O0
+!i113 1
+Z5 o-work 123 -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
+n@lab1_gatelevel
+vt_Lab1_dataflow
+R1
+!i10b 1
+!s100 TY>R<Gm=ejX;=6CNz1`BN3
+IERSGK8:Y4gSF4KL5lF6KA0
+R2
+R0
+w1524567977
+8D:/examples/t_Lab1_dataflow.v
+FD:/examples/t_Lab1_dataflow.v
+L0 1
+R3
+r1
+!s85 0
+31
+R4
+!s107 D:/examples/t_Lab1_dataflow.v|
+!s90 -reportprogress|300|-work|123|-stats=none|D:/examples/t_Lab1_dataflow.v|
+!s101 -O0
+!i113 1
+R5
+nt_@lab1_dataflow
+vt_Lab1_gatelevel
+!s110 1524568079
+!i10b 1
+!s100 jfFUeJO5;d92ZeoW:@nfm3
+IdORmWF7eckQ:e5W6WRRQo0
+R2
+R0
+w1524567416
+Z6 8D:/examples/t_Lab1_gatelevel.v
+Z7 FD:/examples/t_Lab1_gatelevel.v
+L0 1
+R3
+r1
+!s85 0
+31
+!s108 1524568079.000000
+!s107 D:/examples/t_Lab1_gatelevel.v|
+Z8 !s90 -reportprogress|300|-work|123|-stats=none|D:/examples/t_Lab1_gatelevel.v|
+!s101 -O0
+!i113 1
+R5
+nt_@lab1_gatelevel
+vt_Lab1_gatelevel_UDP
+!s110 1524651315
+!i10b 1
+!s100 dVRkjVhT5[z^_ndTm>=nB2
+IH9kzEdY?_XHDNZ`28ka2l0
+R2
+R0
+w1524651256
+R6
+R7
+L0 5
+R3
+r1
+!s85 0
+31
+!s108 1524651314.000000
+!s107 D:/examples/t_Lab1_gatelevel.v|
+R8
+!s101 -O0
+!i113 1
+R5
+nt_@lab1_gatelevel_@u@d@p

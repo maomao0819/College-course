@@ -1,0 +1,318 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dd:/modeltech_pe_edu_10.4a/examples
+vAdder
+Z0 !s110 1560441267
+!i10b 1
+!s100 bQ2iRfh9VCo[05T6PG0=n1
+I8`;hkYl_8[1o4HF4gZ73V3
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+Z2 dD:/testforModelsim/0616098/CO_Lab_4
+w1560433078
+8D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Adder.v
+FD:/testforModelsim/0616098/CO_Lab_4/lab4_code/Adder.v
+Z3 L0 13
+Z4 OP;L;10.4a;61
+r1
+!s85 0
+31
+Z5 !s108 1560441267.000000
+!s107 D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Adder.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Adder.v|
+!s101 -O0
+!i113 1
+Z6 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
+n@adder
+vALU
+R0
+!i10b 1
+!s100 ;C[`j^1_<MOKiOSLFI7PB3
+I4Z@Y57bkjaPiCHl9ehFVC2
+R1
+R2
+w1560434059
+8D:/testforModelsim/0616098/CO_Lab_4/lab4_code/ALU.v
+FD:/testforModelsim/0616098/CO_Lab_4/lab4_code/ALU.v
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/testforModelsim/0616098/CO_Lab_4/lab4_code/ALU.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/CO_Lab_4/lab4_code/ALU.v|
+!s101 -O0
+!i113 1
+R6
+n@a@l@u
+vALU_Ctrl
+R0
+!i10b 1
+!s100 mmCD5[SOLnz0kECL_k_m]1
+I>_8V]FJ;8IOJF_:6_kYOY1
+R1
+R2
+w1560441262
+8D:/testforModelsim/0616098/CO_Lab_4/lab4_code/ALU_Ctrl.v
+FD:/testforModelsim/0616098/CO_Lab_4/lab4_code/ALU_Ctrl.v
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/testforModelsim/0616098/CO_Lab_4/lab4_code/ALU_Ctrl.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/CO_Lab_4/lab4_code/ALU_Ctrl.v|
+!s101 -O0
+!i113 1
+R6
+n@a@l@u_@ctrl
+vData_Memory
+R0
+!i10b 1
+!s100 OInWj<ho1bk3S<Sm8]EmE0
+I8YHIc@>Pl5;1__5Z8H9g43
+R1
+R2
+w1560435498
+8D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Data_Memory.v
+FD:/testforModelsim/0616098/CO_Lab_4/lab4_code/Data_Memory.v
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Data_Memory.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Data_Memory.v|
+!s101 -O0
+!i113 1
+R6
+n@data_@memory
+vDecoder
+R0
+!i10b 1
+!s100 Fa?P<2a3KOYe6I]:GK@JF0
+IFdb:4EcLWR<TIR]f;mTKS3
+R1
+R2
+w1560435501
+8D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Decoder.v
+FD:/testforModelsim/0616098/CO_Lab_4/lab4_code/Decoder.v
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Decoder.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Decoder.v|
+!s101 -O0
+!i113 1
+R6
+n@decoder
+vInstruction_Memory
+Z7 !s110 1560441268
+!i10b 1
+!s100 9SY;kDb8l<B6jfR:5h_0V3
+IAI3oi9VHZ3fTcXKlj5hJE3
+R1
+R2
+w1560435503
+8D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Instruction_Memory.v
+FD:/testforModelsim/0616098/CO_Lab_4/lab4_code/Instruction_Memory.v
+R3
+R4
+r1
+!s85 0
+31
+Z8 !s108 1560441268.000000
+!s107 D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Instruction_Memory.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Instruction_Memory.v|
+!s101 -O0
+!i113 1
+R6
+n@instruction_@memory
+vMUX_2to1
+R7
+!i10b 1
+!s100 gdh;OFlDb<_k2SKhF]WMi0
+Il[Ym39ONU=6Ff^Wez6zQm2
+R1
+R2
+w1560435505
+8D:/testforModelsim/0616098/CO_Lab_4/lab4_code/MUX_2to1.v
+FD:/testforModelsim/0616098/CO_Lab_4/lab4_code/MUX_2to1.v
+R3
+R4
+r1
+!s85 0
+31
+R8
+!s107 D:/testforModelsim/0616098/CO_Lab_4/lab4_code/MUX_2to1.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/CO_Lab_4/lab4_code/MUX_2to1.v|
+!s101 -O0
+!i113 1
+R6
+n@m@u@x_2to1
+vPipe_CPU_1
+R7
+!i10b 1
+!s100 Y5@k:>6U8ML99<6ZQJ=mG3
+I<OVo?1VIOjT_@h;hgGNXM2
+R1
+R2
+w1560437738
+8D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Pipe_CPU_1.v
+FD:/testforModelsim/0616098/CO_Lab_4/lab4_code/Pipe_CPU_1.v
+R3
+R4
+r1
+!s85 0
+31
+R8
+!s107 D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Pipe_CPU_1.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Pipe_CPU_1.v|
+!s101 -O0
+!i113 1
+R6
+n@pipe_@c@p@u_1
+vPipe_Reg
+R7
+!i10b 1
+!s100 0D4L8iglaVJFDSI<=M2ZL0
+I0R_8ic:7gJ]Wl>Te`j4<10
+R1
+R2
+w1560435515
+8D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Pipe_Reg.v
+FD:/testforModelsim/0616098/CO_Lab_4/lab4_code/Pipe_Reg.v
+R3
+R4
+r1
+!s85 0
+31
+R8
+!s107 D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Pipe_Reg.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Pipe_Reg.v|
+!s101 -O0
+!i113 1
+R6
+n@pipe_@reg
+vProgramCounter
+R7
+!i10b 1
+!s100 GUB>g:JQ0;6]4_=<aSnm23
+IU]EUo5QH4ZWXh[Pa^?GHD2
+R1
+R2
+w1560435519
+8D:/testforModelsim/0616098/CO_Lab_4/lab4_code/ProgramCounter.v
+FD:/testforModelsim/0616098/CO_Lab_4/lab4_code/ProgramCounter.v
+R3
+R4
+r1
+!s85 0
+31
+R8
+!s107 D:/testforModelsim/0616098/CO_Lab_4/lab4_code/ProgramCounter.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/CO_Lab_4/lab4_code/ProgramCounter.v|
+!s101 -O0
+!i113 1
+R6
+n@program@counter
+vReg_File
+R7
+!i10b 1
+!s100 @1zF1VNK]_ZEI>I:jhF6Q0
+IJ=Uld4QCHmDiBJLm7P]od3
+R1
+R2
+w1560435525
+8D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Reg_File.v
+FD:/testforModelsim/0616098/CO_Lab_4/lab4_code/Reg_File.v
+R3
+R4
+r1
+!s85 0
+31
+R8
+!s107 D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Reg_File.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Reg_File.v|
+!s101 -O0
+!i113 1
+R6
+n@reg_@file
+vShift_Left_Two_32
+R7
+!i10b 1
+!s100 ^nU]53IlihaXKja8TQ5iK2
+IPSmKjVI9=jEOIjFI1h?aZ0
+R1
+R2
+w1560435527
+8D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Shift_Left_Two_32.v
+FD:/testforModelsim/0616098/CO_Lab_4/lab4_code/Shift_Left_Two_32.v
+L0 9
+R4
+r1
+!s85 0
+31
+R8
+!s107 D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Shift_Left_Two_32.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Shift_Left_Two_32.v|
+!s101 -O0
+!i113 1
+R6
+n@shift_@left_@two_32
+vSign_Extend
+R7
+!i10b 1
+!s100 V_lcg:Olj][jIi;KoQ;d30
+IG1NSY>=8NX:B0UIQ;>80V0
+R1
+R2
+w1560435529
+8D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Sign_Extend.v
+FD:/testforModelsim/0616098/CO_Lab_4/lab4_code/Sign_Extend.v
+R3
+R4
+r1
+!s85 0
+31
+R8
+!s107 D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Sign_Extend.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/CO_Lab_4/lab4_code/Sign_Extend.v|
+!s101 -O0
+!i113 1
+R6
+n@sign_@extend
+vTestBench
+!s110 1560441269
+!i10b 1
+!s100 Gh^Y<zc]YFZGJX;[lWgcK2
+Ic1W886a:Oh482GJNTY<XM0
+R1
+R2
+w1560435554
+8D:/testforModelsim/0616098/CO_Lab_4/lab4_code/TestBench.v
+FD:/testforModelsim/0616098/CO_Lab_4/lab4_code/TestBench.v
+L0 16
+R4
+r1
+!s85 0
+31
+!s108 1560441269.000000
+!s107 D:/testforModelsim/0616098/CO_Lab_4/lab4_code/TestBench.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/CO_Lab_4/lab4_code/TestBench.v|
+!s101 -O0
+!i113 1
+R6
+n@test@bench

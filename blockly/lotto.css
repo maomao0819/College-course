@@ -1,0 +1,28 @@
+div {margin:0; padding:0;}
+#container {
+	display:flex;
+	pointer-events: auto!important;
+	flex-direction:row-reverse;
+}
+#lotto, #blocklyDiv {
+	height:480px;
+	width:80%
+}
+#lotto {
+	border:solid 10px grey;
+	border-radius: 20px;
+	text-align:center;
+	width:70%;
+	
+}		
+#lottoNumber {
+	color: white;
+	background-color: blue;
+	font-size: 2em;
+	width: 80%;
+	border:white 3px solid;
+	border-radius: 12px 12px;
+	margin: auto;
+	text-align: center;
+}	
+

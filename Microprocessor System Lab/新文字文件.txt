@@ -1,0 +1,598 @@
+組員: 0616318蔡承恩 0616098黃秉茂 0616041 陳俊惟 0616329 李京叡
+實驗目的:
+	學習程式與電路板的關係，利用組合語言控制7段顯示器閃爍
+設計圖:	
+
+	 
+
+
+實驗要點
+1.     本次lab的51μp控制兩個port: P1, P2，P1控制的是七段顯示器的開關，本次lab只用到最低位的6bit，分別控制由左至右P1[5]~P1[0]分別控制由左至右6個七段顯示器，當該bit被設為0時，則七段顯示器為開，反之則為關；P2控制的是七段顯示器要顯示的數字，因為要表示0~9十個數字只需要4bit，所以本次lab只要控制P2的最低4位，就可以顯示數字。
+2.     在同一瞬間，這6個七段顯示器能顯示的數字都是同一個，但是透過人眼視覺暫留的現象可以感覺達到同時顯示不同數字的效果，以這次lab為例，在phase 1中，要求6個七段顯示器由左至右依序顯示5~0，實作上是讓6個七段顯示器輪流顯示，一直快速循環，對人眼來說就會有同時顯示不同數字的效果:
+ 	Display1	Display2	Display3	Display4	Display5	Display6
+phase1	Off	Off	Off	Off	Off	0
+phase2	Off	Off	Off	Off	1	Off
+phase3	Off	Off	Off	2	Off	Off
+phase4	Off	Off	3	Off	Off	Off
+phase5	Off	4	Off	Off	Off	Off
+phase6	5	Off	Off	Off	Off	Off
+ 
+CODE:
+	org   0 
+mov  SP, #50H
+       mov  P3, #0
+       ;call delay
+       mov  P0, #0FFH
+       mov  P2, #0FFH
+       mov  P3, #5H
+       mov  P3, #0
+
+
+start:
+       mov  R6, #250
+green_2:
+       mov  P3, #0
+       mov  P0, #0H
+       mov  A, #1H
+       mov  P3, A       
+       call   delay2       ; col1 done
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P0, #7aH
+       add  A, #10H
+       mov  P3, A      ; A:= ???    
+       call   delay2      ; col2 done
+       
+       mov  R7, #4
+g2_loop:
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P0, #4AH
+       add  A, #10H
+       mov  P3, A      ; A:= ???
+       call   delay2      ; col3-6 done in sequence
+       djnz  R7, g2_loop
+
+       anl  P3, #0F0H   ; ==XXX==
+       mov  P0, #4EH
+       add  A, #10H
+       mov  P3, A
+       call   delay2      ; col7 done
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P0, #0H
+       add   A, #10H    ; A:= ???
+       mov  P3, A
+       call   delay2       ; col8 done
+       djnz  R6, green_2
+   
+       anl   P3, #0F0H   ; ==AA==
+       mov  P0, #0FFH   ; ==AA==
+       mov  P3, A       ; ==AA==
+       call   delay2
+
+redd:
+       mov  R6, #250
+red_2:
+       mov  P3, #0
+       mov  P2, #0H
+       mov  A, #4H
+       mov  P3, A
+       call  delay2      ; col1 done
+       anl  P3, #0F0H   ; ==XXX==
+       mov  P2, #7AH
+       add  A, #10H   ; A:= ???
+       mov  P3, A
+       call  delay2       ; col2 done
+
+       mov  R7, #4
+r2_loop:
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P2, #4AH
+       add  A, #10H     ; A:= ???
+       mov  P3, A
+       call  delay2        ; col3-6 done
+       djnz  R7, r2_loop
+
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P2, #4EH
+       add  A, #10H     ; A:= ???
+       mov  P3, A
+       call   delay2       ; col7 done
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P2, #0H
+       add  A, #10H      ; A:= ???
+       mov  P3, A
+       call   delay2        ; col8 done
+       djnz  R6, red_2
+
+       anl  P3, #0F0H    ; ==BB==
+       mov  P2, #0FFH   ; ==BB==
+       mov  P3, A       ; ==BB==
+       call  delay2
+
+       mov  R6, #250
+yellow_2:
+       mov  P0, #0H
+       mov  P2, #0H
+       mov  A, #5H
+       mov  P3, A
+       call  delay2        ; col1 done
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P0, #7AH
+       mov  P2, #7AH
+       add  A, #10H     ; A:= ???
+       mov  P3, A
+       call   delay2       ; col2 done
+
+       mov  R7, #4
+y2_loop:
+       anl  P3, #0F0H   ; ==XXX==
+       mov  P0, #4AH
+       mov  P2, #4AH
+       add  A, #10H      ; A:= ???
+       mov  P3, A
+       call  delay2         ; col3-6 done
+       djnz  R7, y2_loop
+
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P0, #4EH 
+       mov  P2, #4EH 
+       add  A, #10H      ; A:= ???
+       mov  P3, A
+       call  delay2        ; col7 done
+       anl   P3, #0F0H   ; ==XXX==
+       mov  P0, #0H
+       mov  P2, #0H
+       add  A, #10H     ; A:= ???
+       mov  P3, A
+       call  delay2        ; col8 done
+       djnz  R6, yellow_2
+       anl   P3, #0F0H     ; ==CC==
+       mov  P0, #0FFH     ; ==CC==
+       mov  P2, #0FFH     ; ==CC==
+       mov  P3, A         ; ==CC==
+       call  delay2
+
+		
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame0:
+		mov P0, #0FEH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #00H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame0g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame0g
+		djnz r6, frame0
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame1:
+		mov P0, #0FDH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #10H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame1g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame1g
+		djnz r6, frame1
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame2:
+		mov P0, #0FBH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #20H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame2g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame2g
+		djnz r6, frame2
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame3:
+		mov P0, #0F7H		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #30H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame3g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame3g
+		djnz r6, frame3
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame4:
+		mov P0, #0EFH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #40H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame4g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame4g
+		djnz r6, frame4
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame5:
+		mov P0, #0DFH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #50H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame5g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame5g
+		djnz r6, frame5
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame6:
+		mov P0, #0BFH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #60H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame6g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame6g
+		djnz r6, frame6
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame7:
+		mov P0, #07FH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #70H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame7g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame7g
+		djnz r6, frame7
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame8:
+		mov P0, #0BFH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #60H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame8g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame8g
+		djnz r6, frame8
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame9:
+		mov P0, #0DFH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #50H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame9g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame9g
+		djnz r6, frame9
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame10:
+		mov P0, #0EFH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #40H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame10g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame10g
+		djnz r6, frame10
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame11:
+		mov P0, #0F7H		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #30H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame11g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame11g
+		djnz r6, frame11
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame12:
+		mov P0, #0FBH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #20H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame12g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame12g
+		djnz r6, frame12
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+;;;;;;;;;;;;;;;;;;;;;;;
+		mov A, #5
+		mov R6, #8
+		mov R7, #8
+frame13:
+		mov P0, #0FDH		;;;;;;;;;;;;;;;;;;
+		mov P2, #0H
+		add A, #10H 		;;;;;;;;;;;;;;;;;;
+		mov P3, A
+		call delay1
+		mov A, #5
+		mov P2, #0FFH;
+frame13g:
+		add A, #10H
+		mov P3, A
+		call delay
+		djnz r7, frame13g
+		djnz r6, frame13
+
+		mov A, #5
+		mov R7, #8
+		
+;;;;;;;;;;;;;;;;;;;;;;;
+call delay
+
+jmp start
+		
+delay:  push  2
+       push  3
+       mov  R2, #2
+dd:   mov  R3, #64
+       djnz  R3, $
+       djnz  R2, dd
+       pop  3
+       pop  2
+       ret
+       
+
+delay1:  push  2
+       push  3
+      mov  R2, #20
+dd12:   mov  R3, #250
+       djnz  R3, $
+       djnz  R2, dd12
+       pop  3
+       pop  2
+       ret
+
+delay2:  push  2
+       push  3
+       mov  R2, #2
+dd3:   mov  R3, #250
+       djnz  R3, $
+       djnz  R2, dd3
+       pop  3
+       pop  2
+       ret
+
+end
+
+
+
+CODE解釋:	
+	初始: SP指向50H做為stack的起始位置
+	R2、3 :  作為delay計時的暫存器
+	R6 :  延長green、red、yellow出現”2”的時間，以及frame[i]的時間 	
+R7 :  1.一個frame中綠色需經過8欄，將R7初始設為8，讓綠色依照col向右移動(時間過     快，眼睛上感覺會是一次閃八個col)
+
+	
+	 
+
+CODE分2大部分:
+1. 顯示數字2:
+	綠色:
+		
+	紅色:
+		
+	黃色:
+2.phase4
+
+
+
+* difficulties encountered and resolving measures:
+	原本把P1接到七段顯示器那區的下排，把P2接到七段顯示器那區的上排，發現顯示怪怪的，去檢查一下code認為應該總要有個東西對才對，所以懷疑是接線的問題，後來把P1接到七段顯示器那區的上排，把P2接到七段顯示器那區的下排就成功了。
+* phenomena observed and explanations:
+Code上發現: 
+		按照lab2.2給的code可以執行，而結果會是543210閃6次，接著是右邊3	個5(XXX555)和左邊3個1(111XXX)輪著閃6次。透過code，發現R1 is position, 	R2 is the number。
+		其實一開始的543210並不是同時閃，而是先用R1設定是0，用R2設定位	置為最右邊那一格，顯示0了之後，把R1從0變成1，再用R2設定位置為右邊	第二格，以此類推，便能顯示543210。之所以能同時顯示是因為instruction執行	的速度很快，因為數字間顯示的時間差的極短所以我們會認為是同時顯示。
+
+Delay問題:
+		===III=== : 3個5(XXX555)會顯示的時間，要是沒有這一行，會幾乎看不到	右邊的那3個5(XXX555)
+		===JJJ=== : 3個1(111XXX)會顯示的時間，要是沒有這一行，會幾乎看不	到左邊的那3個1(111XXX)
+		===LLL=== : 543210與下次5432110中間間隔全暗的時間，要是沒有這一	行，會幾乎看不到閃爍而是認為543210一直亮著
+	delay1 = 200 instuctions
+	delay2 = 100 * 250 * 10  = 250000 instuctions
+		delay of displaying “543210”: (delay1 * 6 * R5 * time of each instruction = 200 	* 	6 * 250 * 2 = about 0.6 sec
+		delay of displaying “xxxxxx” (LED all dark): delay2 * time of each instruction = 100 * 250 * 10 	* 2 = about 0.5sec
+		delay of displaying “XXX555”: delay2 * time of each instruction = 100 * 250 * 	10 * 2 = about 0.5sec
+		delay of displaying “111XXX” : delay2 * time of each instruction = 100 * 250 * 	10 * 2 = about 0.5sec
+	from above calculating : we know that delay1 and delay2 are balancing 4 phases.
+	改delay就能影響程式執行的差異(如間隔時間，閃爍程度，時間暫留)
+七段顯示器:
+		七段顯示器那區的上排的8bits中，只有7bits是控制位置，分別是控制小數	點，第一個數字，第二個數字，.....，第六個數字。第幾個bit為0的時候第幾個	位置才會亮，1為不亮，MSB似乎什麼都不影響，像是FFH(11111111)代表全暗
+	七段顯示器那區的下排的8bits中，只有4bits會控制數字
+
+push-pop問題:
+		delay1的push-pop不可以省略，因為R1等等還會用到，而不是先被重新賦	值，所以必須要特別先push之後再pop回來
+		delay2的push-pop可以省略，因為R3不會被用到，所以不需要特別先push	之後再pop回來，而R1和R2因為很快就會被重新賦值，重新賦值完才會用到，	所以不用特別用push-pop保存
+
+delay問題2:
+		===KKK=== : 讓543210可以同時出現的關鍵，要是沒有這一行，會幾乎	看不到543210因為閃太快，要是把===KKK===的delay1的時間乘上1000倍，	543210看起來不太像是同時出現，而是像接續出現
+
+self-evaluation
+       * things learnt
+			學會最基本的流程，了解如何用code去控制七段顯示器(數字和位		置)，還有要怎麼利用delay和視覺暫留以達到同時顯示543210，已及			了解到更多push-pop的用法
+       * retrospections raised to oneself
+			在開始用code前記得hardware已經都準備好了，不要在忘記接電		源了。要debug的時候不要一次改太多東西，一次變動一點就好比較			好之道bug發生在哪。還有有些事情不要太直覺，像是不要總認為1			是亮0是暗，七段顯示器就是相反。記得要保存直的時候用push-pop
+
+
+
+
+
+
+Designated Assignment
+D、C、B、A：為BCD碼輸入端。輸入值應為0000~1001(0~9)。
+a , b , c , d , e , f 為輸出端，可以控制輸出位置。
+LT為燈測試輸入，當BI/RBO為1，而LT為0時，所有LED均發亮，若顯示器上有某數字不亮，則可判定期損壞或沒有接妥。
+
+ 
+
+
+

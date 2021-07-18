@@ -1,0 +1,85 @@
+D:/testforModelsim/code1/0616098/CO_Lab2/code/Reg_File.v {1 {vlog -work work -stats=none D:/testforModelsim/code1/0616098/CO_Lab2/code/Reg_File.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Reg_File
+
+Top level modules:
+	Reg_File
+
+} {} {}} D:/testforModelsim/code1/0616098/CO_Lab2/code/Shift_Left_Two_32.v {1 {vlog -work work -stats=none D:/testforModelsim/code1/0616098/CO_Lab2/code/Shift_Left_Two_32.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Shift_Left_Two_32
+
+Top level modules:
+	Shift_Left_Two_32
+
+} {} {}} D:/testforModelsim/code1/0616098/CO_Lab2/code/Instr_Memory.v {1 {vlog -work work -stats=none D:/testforModelsim/code1/0616098/CO_Lab2/code/Instr_Memory.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Instr_Memory
+
+Top level modules:
+	Instr_Memory
+
+} {} {}} D:/testforModelsim/code1/0616098/CO_Lab2/code/Adder.v {1 {vlog -work work -stats=none D:/testforModelsim/code1/0616098/CO_Lab2/code/Adder.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Adder
+
+Top level modules:
+	Adder
+
+} {} {}} D:/testforModelsim/code1/0616098/CO_Lab2/code/ProgramCounter.v {1 {vlog -work work -stats=none D:/testforModelsim/code1/0616098/CO_Lab2/code/ProgramCounter.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ProgramCounter
+
+Top level modules:
+	ProgramCounter
+
+} {} {}} D:/testforModelsim/code1/0616098/CO_Lab2/code/Sign_Extend.v {1 {vlog -work work -stats=none D:/testforModelsim/code1/0616098/CO_Lab2/code/Sign_Extend.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Sign_Extend
+
+Top level modules:
+	Sign_Extend
+
+} {} {}} D:/testforModelsim/code1/0616098/CO_Lab2/code/ALU_Ctrl.v {1 {vlog -work work -stats=none D:/testforModelsim/code1/0616098/CO_Lab2/code/ALU_Ctrl.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ALU_Ctrl
+
+Top level modules:
+	ALU_Ctrl
+
+} {} {}} D:/testforModelsim/code1/0616098/CO_Lab2/code/Decoder.v {1 {vlog -work work -stats=none D:/testforModelsim/code1/0616098/CO_Lab2/code/Decoder.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Decoder
+
+Top level modules:
+	Decoder
+
+} {} {}} D:/testforModelsim/code1/0616098/CO_Lab2/code/MUX_2to1.v {1 {vlog -work work -stats=none D:/testforModelsim/code1/0616098/CO_Lab2/code/MUX_2to1.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module MUX_2to1
+
+Top level modules:
+	MUX_2to1
+
+} {} {}} D:/testforModelsim/code1/0616098/CO_Lab2/code/Test_Bench.v {1 {vlog -work work -stats=none D:/testforModelsim/code1/0616098/CO_Lab2/code/Test_Bench.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module TestBench
+
+Top level modules:
+	TestBench
+
+} {} {}} D:/testforModelsim/code1/0616098/CO_Lab2/code/ALU.v {1 {vlog -work work -stats=none D:/testforModelsim/code1/0616098/CO_Lab2/code/ALU.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ALU
+
+Top level modules:
+	ALU
+
+} {} {}} D:/testforModelsim/code1/0616098/CO_Lab2/code/Simple_Single_CPU.v {1 {vlog -work work -stats=none D:/testforModelsim/code1/0616098/CO_Lab2/code/Simple_Single_CPU.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Simple_Single_CPU
+
+Top level modules:
+	Simple_Single_CPU
+
+} {} {}}

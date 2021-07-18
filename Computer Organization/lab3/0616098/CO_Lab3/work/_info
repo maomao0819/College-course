@@ -1,0 +1,295 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dd:/modeltech_pe_edu_10.4a/examples
+vAdder
+Z0 !s110 1559223166
+!i10b 1
+!s100 bQ2iRfh9VCo[05T6PG0=n1
+IcdGj`DHG0K[N0VXJGM]z51
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+Z2 dD:/testforModelsim/0616098
+w1559149799
+8D:/testforModelsim/0616098/work/Adder.v
+FD:/testforModelsim/0616098/work/Adder.v
+Z3 L0 13
+Z4 OP;L;10.4a;61
+r1
+!s85 0
+31
+Z5 !s108 1559223166.000000
+!s107 D:/testforModelsim/0616098/work/Adder.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/work/Adder.v|
+!s101 -O0
+!i113 1
+Z6 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
+n@adder
+vALU
+R0
+!i10b 1
+!s100 PFMK]cNYRPYEUlaR?J9Qi0
+I8diMMY7?WS]BRG]GH8YKG2
+R1
+R2
+w1559149819
+8D:/testforModelsim/0616098/work/ALU.v
+FD:/testforModelsim/0616098/work/ALU.v
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/testforModelsim/0616098/work/ALU.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/work/ALU.v|
+!s101 -O0
+!i113 1
+R6
+n@a@l@u
+vALU_Ctrl
+R0
+!i10b 1
+!s100 :;c<OI5E3CR2d^5cjd^_m1
+Il[iT]`<5KR?Yk3hdUn2z70
+R1
+R2
+w1559222815
+8D:/testforModelsim/0616098/work/ALU_Ctrl.v
+FD:/testforModelsim/0616098/work/ALU_Ctrl.v
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/testforModelsim/0616098/work/ALU_Ctrl.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/work/ALU_Ctrl.v|
+!s101 -O0
+!i113 1
+R6
+n@a@l@u_@ctrl
+vData_Memory
+R0
+!i10b 1
+!s100 oEY3IXgQFQBECOcDPGn<Z2
+IDM?o3M`VfMGo8jAcd_RIi3
+R1
+R2
+w1559202967
+8D:/testforModelsim/0616098/work/Data_Memory.v
+FD:/testforModelsim/0616098/work/Data_Memory.v
+L0 22
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/testforModelsim/0616098/work/Data_Memory.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/work/Data_Memory.v|
+!s101 -O0
+!i113 1
+R6
+n@data_@memory
+vDecoder
+R0
+!i10b 1
+!s100 E^ea:W0Ubg@3TWWRC3^e>2
+IVIiIVH^L^E4PVVbTXk0GC2
+R1
+R2
+w1559222814
+8D:/testforModelsim/0616098/work/Decoder.v
+FD:/testforModelsim/0616098/work/Decoder.v
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/testforModelsim/0616098/work/Decoder.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/work/Decoder.v|
+!s101 -O0
+!i113 1
+R6
+n@decoder
+vInstr_Memory
+R0
+!i10b 1
+!s100 oZ8kh_[<fejfke0d`XL4;1
+I7?U5URohZUh[YLPNGd[8P2
+R1
+R2
+w1559223161
+8D:/testforModelsim/0616098/work/Instr_Memory.v
+FD:/testforModelsim/0616098/work/Instr_Memory.v
+Z7 L0 12
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/testforModelsim/0616098/work/Instr_Memory.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/work/Instr_Memory.v|
+!s101 -O0
+!i113 1
+R6
+n@instr_@memory
+vMUX_2to1
+Z8 !s110 1559223167
+!i10b 1
+!s100 meH5l0:oN9C7_9j9IP]OR3
+Ij21<9AlZOoJ1D=5A54ccn0
+R1
+R2
+w1559222879
+8D:/testforModelsim/0616098/work/MUX_4to1.v
+FD:/testforModelsim/0616098/work/MUX_4to1.v
+R3
+R4
+r1
+!s85 0
+31
+Z9 !s108 1559223167.000000
+!s107 D:/testforModelsim/0616098/work/MUX_4to1.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/work/MUX_4to1.v|
+!s101 -O0
+!i113 1
+R6
+n@m@u@x_2to1
+vProgramCounter
+R8
+!i10b 1
+!s100 iTX215`DXV<00E0;TM84d1
+IAj]NEg6CLF8h6<d;n2`ZX3
+R1
+R2
+Z10 w1558446041
+8D:/testforModelsim/0616098/work/ProgramCounter.v
+FD:/testforModelsim/0616098/work/ProgramCounter.v
+R7
+R4
+r1
+!s85 0
+31
+R9
+!s107 D:/testforModelsim/0616098/work/ProgramCounter.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/work/ProgramCounter.v|
+!s101 -O0
+!i113 1
+R6
+n@program@counter
+vReg_File
+R8
+!i10b 1
+!s100 j<6RXRndX]gjmY:4>U2=92
+IeOT<Q7<K>K5WFY3@ik`Bf1
+R1
+R2
+w1559222816
+8D:/testforModelsim/0616098/work/Reg_File.v
+FD:/testforModelsim/0616098/work/Reg_File.v
+Z11 L0 11
+R4
+r1
+!s85 0
+31
+R9
+!s107 D:/testforModelsim/0616098/work/Reg_File.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/work/Reg_File.v|
+!s101 -O0
+!i113 1
+R6
+n@reg_@file
+vShift_Left_Two_32
+R8
+!i10b 1
+!s100 ^nU]53IlihaXKja8TQ5iK2
+ISfj30Jk]Pj?AYB189A;C[0
+R1
+R2
+w1559202962
+8D:/testforModelsim/0616098/work/Shift_Left_Two_32.v
+FD:/testforModelsim/0616098/work/Shift_Left_Two_32.v
+L0 9
+R4
+r1
+!s85 0
+31
+R9
+!s107 D:/testforModelsim/0616098/work/Shift_Left_Two_32.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/work/Shift_Left_Two_32.v|
+!s101 -O0
+!i113 1
+R6
+n@shift_@left_@two_32
+vSign_Extend
+R8
+!i10b 1
+!s100 V_lcg:Olj][jIi;KoQ;d30
+IJOLZ2W4AdDe:2U:iC;]Vd1
+R1
+R2
+w1559150128
+8D:/testforModelsim/0616098/work/Sign_Extend.v
+FD:/testforModelsim/0616098/work/Sign_Extend.v
+R3
+R4
+r1
+!s85 0
+31
+R9
+!s107 D:/testforModelsim/0616098/work/Sign_Extend.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/work/Sign_Extend.v|
+!s101 -O0
+!i113 1
+R6
+n@sign_@extend
+vSimple_Single_CPU
+R8
+!i10b 1
+!s100 Z]ZV<e^3`a<d>]^e986;Z2
+IO;cbHO=H^KUX;J29<WV:G1
+R1
+R2
+w1559222812
+8D:/testforModelsim/0616098/work/Simple_Single_CPU.v
+FD:/testforModelsim/0616098/work/Simple_Single_CPU.v
+R11
+R4
+r1
+!s85 0
+31
+R9
+!s107 D:/testforModelsim/0616098/work/Simple_Single_CPU.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/work/Simple_Single_CPU.v|
+!s101 -O0
+!i113 1
+R6
+n@simple_@single_@c@p@u
+vtestbench
+R8
+!i10b 1
+!s100 iI:hT^IWfG0nBGJFQoQKI3
+IgIiO=SNXaF?d88bMJiFh=1
+R1
+R2
+R10
+8D:/testforModelsim/0616098/work/testbench.v
+FD:/testforModelsim/0616098/work/testbench.v
+L0 23
+R4
+r1
+!s85 0
+31
+R9
+!s107 D:/testforModelsim/0616098/work/testbench.v|
+!s90 -reportprogress|300|-work|work|-stats=none|D:/testforModelsim/0616098/work/testbench.v|
+!s101 -O0
+!i113 1
+R6
