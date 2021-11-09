@@ -1,0 +1,2 @@
+﻿  basicDraw.cpp
+C:\Users\user\Desktop\HW1\HW1\basicDraw.cpp(2,10): fatal error C1083: 無法開啟包含檔案: 'glut.h': No such file or directory
